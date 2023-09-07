@@ -57,7 +57,7 @@ func (cf *CloudflareIPData) getLossRate() float32 {
 }
 
 func (cf *CloudflareIPData) toString() []string {
-	result := make([]string, 6)
+	result := make([]string, 5)
 	result[0] = cf.IP.String()
 	result[1] = strconv.Itoa(cf.Sended)
 	result[2] = strconv.Itoa(cf.Received)
@@ -153,12 +153,12 @@ func (s PingDelaySet) Print() {
 	if len(dateString) < PrintNum {  // 如果IP数组长度(IP数量) 小于  打印次数，则次数改为IP数量
 		PrintNum = len(dateString)
 	}
-	headFormat := "%-16s%-5s%-5s%-5s%-6s%-11s\n"
-	dataFormat := "%-18s%-8s%-8s%-8s%-10s%-15s\n"
+	headFormat := "%-16s%-5s%-5s%-5s%-6s\n"
+	dataFormat := "%-18s%-8s%-8s%-8s%-10s\n"
 	for i := 0; i < PrintNum; i++ { // 如果要输出的 IP 中包含 IPv6，那么就需要调整一下间隔
 		if len(dateString[i][0]) > 15 {
-			headFormat = "%-40s%-5s%-5s%-5s%-6s%-11s\n"
-			dataFormat = "%-42s%-8s%-8s%-8s%-10s%-15s\n"
+			headFormat = "%-40s%-5s%-5s%-5s%-6s\n"
+			dataFormat = "%-42s%-8s%-8s%-8s%-10s\n"
 			break
 		}
 	}
