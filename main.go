@@ -17,8 +17,8 @@ CloudflareWarpSpeedTest \n` + `
 参数：
     -n 200
         延迟测速线程；越多延迟测速越快，性能弱的设备 (如路由器) 请勿太高；(默认 200 最多 1000)
-    -t 4
-        延迟测速次数；单个 IP 延迟测速的次数；(默认 4 次)
+    -t 5
+        延迟测速次数；单个 IP 延迟测速的次数；(默认 5 次)
 
     -tl 200
         平均延迟上限；只输出低于指定平均延迟的 IP，各上下限条件可搭配使用；(默认 9999 ms)
@@ -38,11 +38,8 @@ CloudflareWarpSpeedTest \n` + `
     -o result.csv
         写入结果文件；如路径含有空格请加上引号；值为空时不写入文件 [-o ""]；(默认 result.csv)
 
-    -allport
+    -full
         测速全部的端口；对 IP 段中的每个 IP 全部端口进行测速
-
-    -v
-        打印程序版本 + 检查版本更新
     -h
         打印帮助说明
 `
@@ -57,7 +54,6 @@ CloudflareWarpSpeedTest \n` + `
 
 	flag.BoolVar(&task.ScanAllPort, "full", false, "扫描全部端口")
 	flag.IntVar(&utils.PrintNum, "p", 10, "显示结果数量")
-	flag.StringVar(&task.IPFile, "f", "ip.txt", "IP段数据文件")
 	flag.StringVar(&task.IPText, "ip", "", "指定IP段数据")
 	flag.StringVar(&utils.Output, "o", "result.csv", "输出结果文件")
 

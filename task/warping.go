@@ -13,7 +13,7 @@ import (
 
 const (
 	defaultRoutines   = 200
-	defaultPingTimes  = 20
+	defaultPingTimes  = 5
 	udpConnectTimeout = time.Millisecond * 500
 
 	warpValidatePacket = "cf000000628748824150e38f5c64b477"
@@ -22,13 +22,21 @@ const (
 var (
 	ScanAllPort = false
 
-	warpPorts = []int{890, 891}
-
 	Routines = defaultRoutines
 
 	PingTimes int = defaultPingTimes
 
-	MaxWarpPortRange = 1000
+	commonWarpPorts = []int{
+		2408, 500, 1701, 4500,
+		890, 891}
+
+	commonWarpCIDRs = []string{
+		"162.159.192.0/24",
+		"162.159.193.0/24",
+		"162.159.195.0/24",
+	}
+
+	MaxWarpPortRange = 65535
 
 	warpHandshakePacket, _ = hex.DecodeString("04e77a11628748824150e38f5c64b4776d82d118ed6ee00d8ede7ae82405df0c380000000000000000000000004154e7e7b6bbbb84ab8cd5e9b0f82a1c")
 )
@@ -138,7 +146,7 @@ func loadWarpIPRanges() (ipAddrs []*UDPAddr) {
 
 func generateIPAddrWithPorts(ip *net.IPAddr) (udpAddrs []*UDPAddr) {
 	if !ScanAllPort {
-		for _, port := range warpPorts {
+		for _, port := range commonWarpPorts {
 			udpAddrs = append(udpAddrs, &UDPAddr{
 				IP:   ip,
 				Port: port,

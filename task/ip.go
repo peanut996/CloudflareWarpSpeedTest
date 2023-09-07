@@ -1,23 +1,15 @@
 package task
 
 import (
-	"bufio"
 	"log"
 	"math/rand"
 	"net"
-	"os"
 	"strconv"
 	"strings"
 	"time"
 )
 
-const defaultInputFile = "ip.txt"
-
 var (
-	// TestAll test all ip
-	TestAll = true
-	// IPFile is the filename of IP Rangs
-	IPFile = defaultInputFile
 	IPText string
 )
 
@@ -105,12 +97,8 @@ func (r *IPRanges) chooseIPv4() {
 	} else {
 		minIP, hosts := r.getIPRange()    // 返回第四段 IP 的最小值及可用数目
 		for r.ipNet.Contains(r.firstIP) { // 只要该 IP 没有超出 IP 网段范围，就继续循环随机
-			if TestAll { // 如果是测速全部 IP
-				for i := 0; i <= int(hosts); i++ { // 遍历 IP 最后一段最小值到最大值
-					r.appendIPv4(byte(i) + minIP)
-				}
-			} else { // 随机 IP 的最后一段 0.0.0.X
-				r.appendIPv4(minIP + randIPEndWith(hosts))
+			for i := 0; i <= int(hosts); i++ { // 遍历 IP 最后一段最小值到最大值
+				r.appendIPv4(byte(i) + minIP)
 			}
 			r.firstIP[14]++ // 0.0.(X+1).X
 			if r.firstIP[14] == 0 {
@@ -164,25 +152,10 @@ func loadIPRanges() []*net.IPAddr {
 			}
 		}
 	} else { // 从文件中获取 IP 段数据
-		if IPFile == "" {
-			IPFile = defaultInputFile
-		}
-		file, err := os.Open(IPFile)
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer file.Close()
-		scanner := bufio.NewScanner(file)
-		for scanner.Scan() { // 循环遍历文件每一行
-			line := strings.TrimSpace(scanner.Text()) // 去除首尾的空白字符（空格、制表符、换行符等）
-			if line == "" {                           // 跳过空行
-				continue
-			}
-			ranges.parseCIDR(line) // 解析 IP 段，获得 IP、IP 范围、子网掩码
-			if isIPv4(line) {      // 生成要测速的所有 IPv4 / IPv6 地址（单个/随机/全部）
+		for _, cidr := range commonWarpCIDRs {
+			ranges.parseCIDR(cidr) // 解析 IP 段，获得 IP、IP 范围、子网掩码
+			if isIPv4(cidr) {
 				ranges.chooseIPv4()
-			} else {
-				ranges.chooseIPv6()
 			}
 		}
 	}
