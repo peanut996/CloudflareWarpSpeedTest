@@ -27,8 +27,8 @@ var (
 	PingTimes int = defaultPingTimes
 
 	commonWarpPorts = []int{
-		2408, 500, 1701, 4500,
-		890, 891}
+		2408, 500, 1701, 4500, 854, 859, 864, 878, 880, 890, 891, 894, 903, 908, 928, 934, 939, 942, 943, 945, 946, 955, 968, 987, 988, 1002, 1010, 1014, 1018, 1070, 1074, 1180, 1387, 1843, 2371, 2506,
+	}
 
 	commonWarpCIDRs = []string{
 		"162.159.192.0/24",
@@ -36,7 +36,7 @@ var (
 		"162.159.195.0/24",
 	}
 
-	MaxWarpPortRange = 65535
+	MaxWarpPortRange = 10000
 
 	warpHandshakePacket, _ = hex.DecodeString("04e77a11628748824150e38f5c64b4776d82d118ed6ee00d8ede7ae82405df0c380000000000000000000000004154e7e7b6bbbb84ab8cd5e9b0f82a1c")
 )
