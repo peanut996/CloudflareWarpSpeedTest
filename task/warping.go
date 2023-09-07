@@ -36,7 +36,7 @@ var (
 		"162.159.195.0/24",
 	}
 
-	MaxWarpPortRange = 3000
+	MaxWarpPortRange = 65535
 
 	warpHandshakePacket, _ = hex.DecodeString("04e77a11628748824150e38f5c64b4776d82d118ed6ee00d8ede7ae82405df0c380000000000000000000000004154e7e7b6bbbb84ab8cd5e9b0f82a1c")
 )
@@ -137,24 +137,25 @@ func (w *Warping) appendIPData(data *utils.PingData) {
 
 func loadWarpIPRanges() (ipAddrs []*UDPAddr) {
 	ips := loadIPRanges()
-	for _, ip := range ips {
-		portAddrs := generateIPAddrWithPorts(ip)
-		ipAddrs = append(ipAddrs, portAddrs...)
-	}
-	return ipAddrs
+	return generateIPAddrs(ips)
 }
 
-func generateIPAddrWithPorts(ip *net.IPAddr) (udpAddrs []*UDPAddr) {
+func generateIPAddrs(ips []*net.IPAddr) (udpAddrs []*UDPAddr) {
 	if !ScanAllPort {
 		for _, port := range commonWarpPorts {
-			udpAddrs = append(udpAddrs, &UDPAddr{
-				IP:   ip,
-				Port: port,
-			})
+			udpAddrs = append(udpAddrs, generateSingleIPAddr(ips, port)...)
 		}
 		return
 	}
 	for port := 1; port <= MaxWarpPortRange; port++ {
+		udpAddrs = append(udpAddrs, generateSingleIPAddr(ips, port)...)
+	}
+	return udpAddrs
+}
+
+func generateSingleIPAddr(ips []*net.IPAddr, port int) []*UDPAddr {
+	udpAddrs := make([]*UDPAddr, 0)
+	for _, ip := range ips {
 		udpAddrs = append(udpAddrs, &UDPAddr{
 			IP:   ip,
 			Port: port,
