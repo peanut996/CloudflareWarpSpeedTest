@@ -6,7 +6,7 @@ Inspired by [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)
 
 ```bash
 # clone 
-git clone https://github.com/peanut996/CloudFlareWarpSpeedTest.git
+git clone https://github.com/peanut996/CloudflareWarpSpeedTest.git
 
 cd CloudFlareWarpSpeedTest
 
