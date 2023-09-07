@@ -44,8 +44,7 @@ type PingData struct {
 
 type CloudflareIPData struct {
 	*PingData
-	lossRate      float32
-	DownloadSpeed float64
+	lossRate float32
 }
 
 // 计算丢包率
@@ -64,7 +63,6 @@ func (cf *CloudflareIPData) toString() []string {
 	result[2] = strconv.Itoa(cf.Received)
 	result[3] = strconv.FormatFloat(float64(cf.getLossRate()), 'f', 2, 32)
 	result[4] = strconv.FormatFloat(cf.Delay.Seconds()*1000, 'f', 2, 32)
-	result[5] = strconv.FormatFloat(cf.DownloadSpeed/1024/1024, 'f', 2, 32)
 	return result
 }
 
@@ -79,7 +77,7 @@ func ExportCsv(data []CloudflareIPData) {
 	}
 	defer fp.Close()
 	w := csv.NewWriter(fp) //创建一个新的写入文件流
-	_ = w.Write([]string{"IP 地址", "已发送", "已接收", "丢包率", "平均延迟", "下载速度 (MB/s)"})
+	_ = w.Write([]string{"IP 地址", "已发送", "已接收", "丢包率", "平均延迟"})
 	_ = w.WriteAll(convertToString(data))
 	w.Flush()
 }
@@ -143,20 +141,7 @@ func (s PingDelaySet) Swap(i, j int) {
 	s[i], s[j] = s[j], s[i]
 }
 
-// 下载速度排序
-type DownloadSpeedSet []CloudflareIPData
-
-func (s DownloadSpeedSet) Len() int {
-	return len(s)
-}
-func (s DownloadSpeedSet) Less(i, j int) bool {
-	return s[i].DownloadSpeed > s[j].DownloadSpeed
-}
-func (s DownloadSpeedSet) Swap(i, j int) {
-	s[i], s[j] = s[j], s[i]
-}
-
-func (s DownloadSpeedSet) Print() {
+func (s PingDelaySet) Print() {
 	if NoPrintResult() {
 		return
 	}
@@ -177,9 +162,9 @@ func (s DownloadSpeedSet) Print() {
 			break
 		}
 	}
-	fmt.Printf(headFormat, "IP 地址", "已发送", "已接收", "丢包率", "平均延迟", "下载速度 (MB/s)")
+	fmt.Printf(headFormat, "IP 地址", "已发送", "已接收", "丢包率", "平均延迟")
 	for i := 0; i < PrintNum; i++ {
-		fmt.Printf(dataFormat, dateString[i][0], dateString[i][1], dateString[i][2], dateString[i][3], dateString[i][4], dateString[i][5])
+		fmt.Printf(dataFormat, dateString[i][0], dateString[i][1], dateString[i][2], dateString[i][3], dateString[i][4])
 	}
 	if !noOutput() {
 		fmt.Printf("\n完整测速结果已写入 %v 文件，可使用记事本/表格软件查看。\n", Output)

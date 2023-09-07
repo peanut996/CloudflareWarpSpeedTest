@@ -5,7 +5,6 @@ CloudFlare Warp 优选IP工具，找到延迟最低和丢包率最低的WireGuar
 Inspired by [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)
 
 ```bash
-# clone 
 git clone https://github.com/peanut996/CloudflareWarpSpeedTest.git
 
 cd CloudFlareWarpSpeedTest
