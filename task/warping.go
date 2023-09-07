@@ -36,7 +36,7 @@ var (
 		"162.159.195.0/24",
 	}
 
-	MaxWarpPortRange = 65535
+	MaxWarpPortRange = 3000
 
 	warpHandshakePacket, _ = hex.DecodeString("04e77a11628748824150e38f5c64b4776d82d118ed6ee00d8ede7ae82405df0c380000000000000000000000004154e7e7b6bbbb84ab8cd5e9b0f82a1c")
 )
