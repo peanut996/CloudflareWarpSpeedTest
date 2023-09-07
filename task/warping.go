@@ -14,7 +14,7 @@ import (
 const (
 	defaultRoutines   = 200
 	defaultPingTimes  = 5
-	udpConnectTimeout = time.Millisecond * 500
+	udpConnectTimeout = time.Millisecond * 300
 
 	warpValidatePacket = "cf000000628748824150e38f5c64b477"
 )
@@ -193,7 +193,7 @@ func (w *Warping) warping(ip *UDPAddr) (bool, time.Duration) {
 
 	revBuff := make([]byte, 1024)
 
-	err = conn.SetDeadline(time.Now().Add(time.Second))
+	err = conn.SetDeadline(time.Now().Add(udpConnectTimeout))
 	if err != nil {
 		return false, 0
 	}

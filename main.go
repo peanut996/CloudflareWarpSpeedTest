@@ -48,7 +48,7 @@ CloudflareWarpSpeedTest \n` + `
 	flag.IntVar(&task.Routines, "n", 200, "延迟测速线程")
 	flag.IntVar(&task.PingTimes, "t", 5, "延迟测速次数")
 
-	flag.IntVar(&maxDelay, "tl", 499, "平均延迟上限")
+	flag.IntVar(&maxDelay, "tl", 300, "平均延迟上限")
 	flag.IntVar(&minDelay, "tll", 0, "平均延迟下限")
 	flag.Float64Var(&maxLossRate, "tlr", 1, "丢包几率上限")
 
