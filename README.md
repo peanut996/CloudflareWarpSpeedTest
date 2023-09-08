@@ -7,7 +7,7 @@ Inspired by [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)
 
 ## Download
 
-  + [Releases](https://github.com/peanut996/CloudflareWarpSpeedTest/releases/lastest)
+  + [Releases](https://github.com/peanut996/CloudflareWarpSpeedTest/releases)
   + `go install github.com/peanut996/CloudflareWarpSpeedTest@latest`
 
 
