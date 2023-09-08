@@ -4,6 +4,7 @@ import (
 	"CloudflareWarpSpeedTest/utils"
 	"encoding/hex"
 	"fmt"
+	"math/rand"
 	"net"
 	"sort"
 	"strconv"
@@ -27,7 +28,7 @@ var (
 	PingTimes int = defaultPingTimes
 
 	commonWarpPorts = []int{
-		2408, 500, 1701, 4500, 854, 859, 864, 878, 880, 890, 891, 894, 903, 908, 928, 934, 939, 942, 943, 945, 946, 955, 968, 987, 988, 1002, 1010, 1014, 1018, 1070, 1074, 1180, 1387, 1843, 2371, 2506,
+		500, 854, 859, 864, 878, 880, 890, 891, 894, 903, 908, 928, 934, 939, 942, 943, 945, 946, 955, 968, 987, 988, 1002, 1010, 1014, 1018, 1070, 1074, 1180, 1387, 1701, 1843, 2371, 2408, 2506,
 	}
 
 	commonWarpCIDRs = []string{
@@ -100,10 +101,12 @@ func (w *Warping) start(ip *UDPAddr) {
 
 func (w *Warping) checkConnection(ip *UDPAddr) (recv int, totalDelay time.Duration) {
 	for i := 0; i < PingTimes; i++ {
-		if ok, delay := w.warping(ip); ok {
-			recv++
-			totalDelay += delay
+		ok, delay := w.warping(ip)
+		if !ok {
+			return
 		}
+		recv++
+		totalDelay += delay
 	}
 	return
 }
@@ -145,11 +148,12 @@ func generateIPAddrs(ips []*net.IPAddr) (udpAddrs []*UDPAddr) {
 		for _, port := range commonWarpPorts {
 			udpAddrs = append(udpAddrs, generateSingleIPAddr(ips, port)...)
 		}
-		return
+	} else {
+		for port := 1; port <= MaxWarpPortRange; port++ {
+			udpAddrs = append(udpAddrs, generateSingleIPAddr(ips, port)...)
+		}
 	}
-	for port := 1; port <= MaxWarpPortRange; port++ {
-		udpAddrs = append(udpAddrs, generateSingleIPAddr(ips, port)...)
-	}
+	shuffleAddrs(&udpAddrs)
 	return udpAddrs
 }
 
@@ -209,4 +213,11 @@ func (w *Warping) warping(ip *UDPAddr) (bool, time.Duration) {
 
 	duration := time.Since(startTime)
 	return true, duration
+}
+
+func shuffleAddrs(udpAddrs *[]*UDPAddr) {
+	r := rand.New(rand.NewSource(time.Now().Unix()))
+	r.Shuffle(len(*udpAddrs), func(i, j int) {
+		(*udpAddrs)[i], (*udpAddrs)[j] = (*udpAddrs)[j], (*udpAddrs)[i]
+	})
 }
