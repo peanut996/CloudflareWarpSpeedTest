@@ -16,12 +16,12 @@ CloudflareWarpSpeedTest \n` + `
 
 参数：
     -n 200
-        延迟测速线程；越多延迟测速越快，性能弱的设备 (如路由器) 请勿太高；(默认 200 最多 1000)
-    -t 5
-        延迟测速次数；单个 IP 延迟测速的次数；(默认 5 次)
+        延迟测速线程；越多延迟测速越快，性能弱的设备 (如路由器) 请勿太高；(默认 500 最多 1000)
+    -t 10
+        延迟测速次数；单个 IP 延迟测速的次数；(默认 10 次)
 
-    -tl 200
-        平均延迟上限；只输出低于指定平均延迟的 IP，各上下限条件可搭配使用；(默认 9999 ms)
+    -tl 300
+        平均延迟上限；只输出低于指定平均延迟的 IP，各上下限条件可搭配使用；(默认 300 ms)
     -tll 40
         平均延迟下限；只输出高于指定平均延迟的 IP；(默认 0 ms)
     -tlr 0.2
@@ -46,7 +46,7 @@ CloudflareWarpSpeedTest \n` + `
 	var minDelay, maxDelay int
 	var maxLossRate float64
 	flag.IntVar(&task.Routines, "n", 200, "延迟测速线程")
-	flag.IntVar(&task.PingTimes, "t", 5, "延迟测速次数")
+	flag.IntVar(&task.PingTimes, "t", 10, "延迟测速次数")
 
 	flag.IntVar(&maxDelay, "tl", 300, "平均延迟上限")
 	flag.IntVar(&minDelay, "tll", 0, "平均延迟下限")

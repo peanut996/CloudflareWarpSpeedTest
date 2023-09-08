@@ -14,7 +14,7 @@ import (
 
 const (
 	defaultRoutines   = 200
-	defaultPingTimes  = 5
+	defaultPingTimes  = 10
 	udpConnectTimeout = time.Millisecond * 300
 
 	warpValidatePacket = "cf000000628748824150e38f5c64b477"
