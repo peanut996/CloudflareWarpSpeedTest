@@ -5,7 +5,7 @@ Cloudflare Warp 速度测试是一个命令行工具，用于测试 Cloudflare W
 
 Inspired(Copied) by [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)
 
-## Download
+## 安装
 
   + [Releases](https://github.com/peanut996/CloudflareWarpSpeedTest/releases)
   + `go install github.com/peanut996/CloudflareWarpSpeedTest@latest`
