@@ -13,19 +13,21 @@ import (
 )
 
 const (
-	defaultRoutines   = 200
-	defaultPingTimes  = 10
-	udpConnectTimeout = time.Millisecond * 300
-
+	defaultRoutines    = 200
+	defaultPingTimes   = 10
+	udpConnectTimeout  = time.Millisecond * 1000
 	warpValidatePacket = "cf000000628748824150e38f5c64b477"
+	quickModeMaxIpNum  = 5000
 )
 
 var (
+	QuickMode = false
+
 	ScanAllPort = false
 
 	Routines = defaultRoutines
 
-	PingTimes int = defaultPingTimes
+	PingTimes = defaultPingTimes
 
 	commonWarpPorts = []int{
 		500, 854, 859, 864, 878, 880, 890, 891, 894, 903,
@@ -132,7 +134,11 @@ func (w *Warping) appendIPData(data *utils.PingData) {
 
 func loadWarpIPRanges() (ipAddrs []*UDPAddr) {
 	ips := loadIPRanges()
-	return generateIPAddrs(ips)
+	addrs := generateIPAddrs(ips)
+	if QuickMode {
+		return addrs[:quickModeMaxIpNum]
+	}
+	return addrs
 }
 
 func generateIPAddrs(ips []*net.IPAddr) (udpAddrs []*UDPAddr) {
