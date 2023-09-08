@@ -1,12 +1,13 @@
-module CloudflareWarpSpeedTest
+module github.com/peanut996/CloudflareWarpSpeedTest
 
 go 1.20
 
 require github.com/cheggaaa/pb/v3 v3.1.4
 
-replace github.com/peanut996/CloudflareWarpSpeedTest => ./
+replace CloudflareWarpSpeedTest => ./
 
 require (
+	CloudflareWarpSpeedTest v0.0.0-00010101000000-000000000000 // indirect
 	github.com/VividCortex/ewma v1.2.0 // indirect
 	github.com/fatih/color v1.15.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
