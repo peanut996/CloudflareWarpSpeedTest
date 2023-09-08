@@ -4,6 +4,8 @@ go 1.20
 
 require github.com/cheggaaa/pb/v3 v3.1.4
 
+replace github.com/peanut996/CloudflareWarpSpeedTest => ./
+
 require (
 	github.com/VividCortex/ewma v1.2.0 // indirect
 	github.com/fatih/color v1.15.0 // indirect
