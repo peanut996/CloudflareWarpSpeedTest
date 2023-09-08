@@ -99,20 +99,8 @@ func (w *Warping) start(ip *UDPAddr) {
 	<-w.control
 }
 
-func (w *Warping) checkConnection(ip *UDPAddr) (recv int, totalDelay time.Duration) {
-	for i := 0; i < PingTimes; i++ {
-		ok, delay := w.warping(ip)
-		if !ok {
-			return
-		}
-		recv++
-		totalDelay += delay
-	}
-	return
-}
-
 func (w *Warping) warpingHandler(ip *UDPAddr) {
-	recv, totalDelay := w.checkConnection(ip)
+	recv, totalDelay := w.warping(ip)
 	nowAble := len(w.csv)
 	if recv != 0 {
 		nowAble++
@@ -181,17 +169,28 @@ func (i *UDPAddr) ToUDPAddr() (addr *net.UDPAddr) {
 	return
 }
 
-func (w *Warping) warping(ip *UDPAddr) (bool, time.Duration) {
-
+func (w *Warping) warping(ip *UDPAddr) (received int, totalDelay time.Duration) {
 	fullAddress := ip.FullAddress()
 	conn, err := net.DialTimeout("udp", fullAddress, udpConnectTimeout)
 	if err != nil {
-		return false, 0
+		return 0, 0
 	}
 	defer conn.Close()
-	startTime := time.Now()
 
-	_, err = conn.Write(warpHandshakePacket)
+	for i := 0; i < PingTimes; i++ {
+		ok, rtt := handshake(conn)
+		if ok {
+			received++
+			totalDelay += rtt
+		}
+	}
+	return
+
+}
+
+func handshake(conn net.Conn) (bool, time.Duration) {
+	startTime := time.Now()
+	_, err := conn.Write(warpHandshakePacket)
 	if err != nil {
 		return false, 0
 	}
