@@ -1,9 +1,9 @@
 package task
 
 import (
-	"CloudflareWarpSpeedTest/utils"
 	"encoding/hex"
 	"fmt"
+	"github.com/peanut996/CloudflareWarpSpeedTest/utils"
 	"math/rand"
 	"net"
 	"sort"

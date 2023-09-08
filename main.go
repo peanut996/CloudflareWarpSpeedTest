@@ -1,10 +1,10 @@
 package main
 
 import (
-	"CloudflareWarpSpeedTest/task"
-	"CloudflareWarpSpeedTest/utils"
 	"flag"
 	"fmt"
+	"github.com/peanut996/CloudflareWarpSpeedTest/task"
+	"github.com/peanut996/CloudflareWarpSpeedTest/utils"
 	"time"
 )
 
