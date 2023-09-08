@@ -3,7 +3,7 @@
 ## 简介
 Cloudflare Warp 速度测试是一个命令行工具，用于测试 Cloudflare Warp IP 地址的延迟和速度，并获取关于最低延迟和可用端口的信息。它提供了各种选项，以自定义测试参数并根据特定条件筛选结果。
 
-Inspired by [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)
+Inspired(Copied) by [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)
 
 ## Download
 
@@ -21,11 +21,11 @@ CloudflareWarpSpeedTest -n 200 -t 10 -tl 300 -tll 0 -tlr 0.2 -sl 5 -p 10 -f ip.t
 
 以下是主要可用选项的解释：
 
-  + -n 200：指定延迟测试线程的数量。增加此值可以加快延迟测试过程，但不适合性能较低的设备，如路由器。默认值为 200，最大为 1000。
-  + -t 10：设置对每个 IP 地址执行延迟测试的次数。默认值为 10 次。
-  + -o result.csv：设置输出结果文件。默认文件为 "result.csv"。
-  + -full：此标志表示应测试指定范围内的所有端口。
-  + -h：显示帮助和用法说明。
+  + `-n`    200：指定延迟测试线程的数量。增加此值可以加快延迟测试过程，但不适合性能较低的设备，如路由器。默认值为 200，最大为 1000。
+  + `-t`    10：设置对每个 IP 地址执行延迟测试的次数。默认值为 10 次。
+  + `-o`    result.csv：设置输出结果文件。默认文件为 "result.csv"。
+  + `-full` 此标志表示应测试指定范围内的所有端口。
+  + `-h`    显示帮助和用法说明。
 
 更多使用说明请使用`-h`。
 
