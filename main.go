@@ -20,7 +20,7 @@ CloudflareWarpSpeedTest \n` + `
     -t 10
         延迟测速次数；单个 IP 延迟测速的次数；(默认 10 次)
     -q 
-        快速模式； 随机扫描5000的地址测速结果
+        快速模式； 随机扫描5000的地址测速结果；默认打开，[-q=false] 关闭快速模式
     -tl 300
         平均延迟上限；只输出低于指定平均延迟的 IP，各上下限条件可搭配使用；(默认 300 ms)
     -tll 40
@@ -54,7 +54,7 @@ CloudflareWarpSpeedTest \n` + `
 	flag.Float64Var(&maxLossRate, "tlr", 1, "丢包几率上限")
 
 	flag.BoolVar(&task.ScanAllPort, "full", false, "扫描全部端口")
-	flag.BoolVar(&task.QuickMode, "q", false, "快速模式，仅随机扫描5000个IP的结果")
+	flag.BoolVar(&task.QuickMode, "q", true, "快速模式，仅随机扫描5000个IP的结果")
 	flag.IntVar(&utils.PrintNum, "p", 10, "显示结果数量")
 	flag.StringVar(&task.IPFile, "f", "", "IP段数据文件")
 	flag.StringVar(&task.IPText, "ip", "", "指定IP段数据")
