@@ -3,9 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
+	"time"
+
 	"github.com/peanut996/CloudflareWarpSpeedTest/task"
 	"github.com/peanut996/CloudflareWarpSpeedTest/utils"
-	"time"
 )
 
 func init() {
@@ -38,7 +39,10 @@ CloudflareWarpSpeedTest \n` + `
         指定IP段数据；直接通过参数指定要测速的 IP 段数据，英文逗号分隔；(默认 空)
     -o result.csv
         写入结果文件；如路径含有空格请加上引号；值为空时不写入文件 [-o ""]；(默认 result.csv)
-
+    -pri 私钥
+        指定你的wireguard私钥
+    -pub 私钥
+        指定你的wireguard公钥, 默认为warp的公钥
     -full
         测速全部的端口；对 IP 段中的每个 IP 全部端口进行测速
     -h
@@ -59,6 +63,8 @@ CloudflareWarpSpeedTest \n` + `
 	flag.StringVar(&task.IPFile, "f", "", "IP段数据文件")
 	flag.StringVar(&task.IPText, "ip", "", "指定IP段数据")
 	flag.StringVar(&utils.Output, "o", "result.csv", "输出结果文件")
+	flag.StringVar(&task.PrivateKey, "pri", "", "指定private key")
+	flag.StringVar(&task.PrivateKey, "pub", "", "指定public key")
 
 	flag.BoolVar(&printVersion, "v", false, "打印程序版本")
 	flag.Usage = func() { fmt.Print(help) }
@@ -71,6 +77,7 @@ CloudflareWarpSpeedTest \n` + `
 
 func main() {
 	task.InitRandSeed()
+	task.InitHandshakePacket()
 
 	fmt.Printf("CloudflareWarpSpeedTest\n\n")
 
