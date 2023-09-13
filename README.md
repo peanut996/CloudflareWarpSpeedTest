@@ -26,6 +26,8 @@ CloudflareWarpSpeedTest -n 200 -t 10 -tl 300 -q -tll 0 -tlr 0.2 -sl 5 -p 10 -f i
   + `-q`    快速模式：快速扫描5000个地址结果。**默认打开**， 使用`-q=false` 关闭快速模式。
   + `-o`    result.csv：设置输出结果文件。默认文件为 "result.csv"。
   + `-full` 此标志表示应测试指定范围内的所有端口。
+  + `-pri`  自定义wireguard的私钥。
+  + `-pub`  自定义wireguard的公钥。默认为Warp的公钥
   + `-h`    显示帮助和用法说明。
 
 更多使用说明请使用`-h`。
