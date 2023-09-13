@@ -1,3 +1,7 @@
+<p align="center">
+    <br> 中文 | <a href="README_EN.md">English</a>
+</p>
+
 # CloudflareWarpSpeedTest
 
 ## 简介
