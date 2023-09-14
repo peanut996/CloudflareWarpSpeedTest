@@ -34,3 +34,4 @@ jobs:
         goarch: ${{ matrix.goarch }}
         project_path: "."
         binary_name: "CloudflareWarpSpeedTest"
+        goversion: "1.20"
