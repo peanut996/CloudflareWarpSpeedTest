@@ -156,7 +156,7 @@ func (w *Warping) appendIPData(data *utils.PingData) {
 func loadWarpIPRanges() (ipAddrs []*UDPAddr) {
 	ips := loadIPRanges()
 	addrs := generateIPAddrs(ips)
-	if QuickMode {
+	if QuickMode && len(addrs) > quickModeMaxIpNum {
 		return addrs[:quickModeMaxIpNum]
 	}
 	return addrs
