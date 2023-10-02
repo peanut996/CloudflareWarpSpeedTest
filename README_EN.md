@@ -12,7 +12,7 @@ Inspired(Copied) by [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpee
 ## Installation
 
   + [Releases](https://github.com/peanut996/CloudflareWarpSpeedTest/releases)
-  + `go install github.com/peanut996/CloudflareWarpSpeedTest@latest`
+  + `go install github.com/peanut996/CloudflareWarpSpeedTest@latest` (go version <= 1.20)
 
 ## Usage
 
