@@ -12,7 +12,7 @@ Inspired(Copied) by [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpee
 ## 安装
 
   + [Releases](https://github.com/peanut996/CloudflareWarpSpeedTest/releases)
-  + `go install github.com/peanut996/CloudflareWarpSpeedTest@latest` (需要go的版本在1.20及以下)
+  + `go install github.com/peanut996/CloudflareWarpSpeedTest@latest` (go version <= 1.20)
 
 
 ## 用法
