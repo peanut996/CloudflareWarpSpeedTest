@@ -262,12 +262,12 @@ func InitHandshakePacket() {
 
 	pri, err := getNoisePrivateKeyFromBase64(PrivateKey)
 	if err != nil {
-		log.Fatalln("解析私钥失败：" + err.Error())
+		log.Fatalln("Failed to parse private key: " + err.Error())
 	}
 
 	pub, err := getNoisePublicKeyFromBase64(PublicKey)
 	if err != nil {
-		log.Fatalln("解析公钥失败：" + err.Error())
+		log.Fatalln("Failed to parse public key: " + err.Error())
 	}
 
 	packet := buildHandshakePacket(pri, pub)
@@ -278,7 +278,7 @@ func InitHandshakePacket() {
 func buildHandshakePacket(pri device.NoisePrivateKey, pub device.NoisePublicKey) []byte {
 	d, _, err := netstack.CreateNetTUN([]netip.Addr{}, []netip.Addr{}, 1480)
 	if err != nil {
-		log.Fatalln("构建握手包失败: " + err.Error())
+		log.Fatalln("Failed to build handshake packet: " + err.Error())
 	}
 	dev := device.NewDevice(d, conn.NewDefaultBind(), device.NewLogger(0, ""))
 
@@ -286,11 +286,11 @@ func buildHandshakePacket(pri device.NoisePrivateKey, pub device.NoisePublicKey)
 
 	peer, err := dev.NewPeer(pub)
 	if err != nil {
-		log.Fatalln("构建握手包失败: " + err.Error())
+		log.Fatalln("Failed to build handshake packet: " + err.Error())
 	}
 	msg, err := dev.CreateMessageInitiation(peer)
 	if err != nil {
-		log.Fatalln("构建握手包失败: " + err.Error())
+		log.Fatalln("Failed to build handshake packet: " + err.Error())
 	}
 
 	var buf [device.MessageInitiationSize]byte
@@ -310,7 +310,10 @@ func getNoisePrivateKeyFromBase64(b string) (device.NoisePrivateKey, error) {
 	if err != nil {
 		return pk, err
 	}
-	pk.FromHex(h)
+	err = pk.FromHex(h)
+	if err != nil {
+		return pk, err
+	}
 	return pk, nil
 }
 
@@ -320,17 +323,20 @@ func getNoisePublicKeyFromBase64(b string) (device.NoisePublicKey, error) {
 	if err != nil {
 		return pk, err
 	}
-	pk.FromHex(h)
+	err = pk.FromHex(h)
+	if err != nil {
+		return pk, err
+	}
 	return pk, nil
 }
 
 func encodeBase64ToHex(key string) (string, error) {
 	decoded, err := base64.StdEncoding.DecodeString(key)
 	if err != nil {
-		return "", errors.New("invalid base64 string: " + key)
+		return "", errors.New("Invalid base64 string: " + key)
 	}
 	if len(decoded) != 32 {
-		return "", errors.New("key should be 32 bytes: " + key)
+		return "", errors.New("Noise key should be 32 bytes: " + key)
 	}
 	return hex.EncodeToString(decoded), nil
 }
