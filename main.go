@@ -17,7 +17,7 @@ var (
 func init() {
 	var printVersion bool
 	var help = `
-CloudflareWarpSpeedTest ` + Version + `\n` + `
+CloudflareWarpSpeedTest ` + Version + `
 Test the latency and speed of all Cloudflare Warp IPs to obtain the lowest latency and port.
 
 Parameters:
