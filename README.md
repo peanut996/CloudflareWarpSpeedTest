@@ -1,5 +1,5 @@
 <p align="center">
-    <br> <a href="README_CN.md">中文</a>  | English
+   <br>  English |  <a href="README_CN.md">中文</a>
 </p>
 
 # CloudflareWarpSpeedTest
