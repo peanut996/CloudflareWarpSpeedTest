@@ -52,7 +52,7 @@ Parameters:
     -h
         Print the help explanation
     -v 
-        Print the version and build time
+        Print the version
 `
 
 	var minDelay, maxDelay int
