@@ -27,6 +27,10 @@ jobs:
             goos: windows
     steps:
     - uses: actions/checkout@v3
+
+    - name: Set APP_VERSION env
+      run: echo APP_VERSION=$(basename ${GITHUB_REF}) >> ${GITHUB_ENV}
+
     - uses: wangyoucao577/go-release-action@v1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -35,4 +39,4 @@ jobs:
         project_path: "."
         binary_name: "CloudflareWarpSpeedTest"
         goversion: "1.20"
-        ldflags: "-X main.Version=$(git describe --tags --abbrev=0)"
+        ldflags: "-X main.Version=${{ env.APP_VERSION }}"
