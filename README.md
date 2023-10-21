@@ -1,45 +1,68 @@
 <p align="center">
-   <br>  English |  <a href="README_CN.md">中文</a>
+   <br>  中文 | <a href="README_EN.md">English</a>
 </p>
 
 # CloudflareWarpSpeedTest
 
-## Introduction
-Cloudflare Warp Speed Test is a command-line tool for testing the latency and speed of Cloudflare Warp IP addresses and obtaining information about the minimum latency and available ports. It provides various options to customize test parameters and filter results based on specific conditions.
+## 简介
+Cloudflare Warp 速度测试是一个命令行工具，用于测试 Cloudflare Warp IP 地址的延迟和速度，并获取关于最低延迟和可用端口的信息。它提供了各种选项，以自定义测试参数并根据特定条件筛选结果。
 
 Inspired(Copied) by [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)
 
-## Installation
+## 安装
 
-  + [Releases](https://github.com/peanut996/CloudflareWarpSpeedTest/releases)
-  + `go install github.com/peanut996/CloudflareWarpSpeedTest@latest` (go version <= 1.20)
+### 包管理器
+#### Homebrew
+```bash
+brew tap peanut996/tap && brew install cloudflarewarpspeedtest
+```
 
-## Usage
+#### WinGet
+```bash
+winget install peanut996.CloudflareWarpSpeedTest
+```
 
-To use Cloudflare Warp Speed Test, you can run the following command-line options:
+#### Scoop
+```bash
+scoop bucket add extras && scoop install CloudflareWarpSpeedTest
+```
+
+#### Go Install
+使用go官方工具链安装(go版本<=1.20)
+
+```bash
+go install github.com/peanut996/CloudflareWarpSpeedTest@latest
+```
+
+### Release
+前往 [Releases](https://github.com/peanut996/CloudflareWarpSpeedTest/releases) 页面，下载预编译的二进制文件。
+
+
+## 用法
+要使用 Cloudflare Warp Speed Test，您可以运行以下命令行选项
 
 ```bash
 CloudflareWarpSpeedTest -n 200 -t 10 -tl 300 -q -tll 0 -tlr 0.2 -sl 5 -p 10 -f ip.txt -ip 1.1.1.1 -o result.csv -full
 ```
 
-Here is an explanation of the main available options:
+以下是主要可用选项的解释：
 
-  + `-n`    200: Specifies the number of latency test threads. Increasing this value can speed up the latency testing process, but it may not be suitable for lower-performance devices like routers. The default value is 200, with a maximum of 1000.
-  + `-t`    10: Sets the number of times latency tests are performed for each IP address. The default value is 10 times.
-  + `-q`    Quick mode: Quickly scan results for 5000 addresses. **Default is on**, use `-q=false` to turn off quick mode.
-  + `-o`    result.csv: Sets the output result file. The default file is \"result.csv\".
-  + `-full` This flag indicates that all ports within the specified range should be tested.
-  + `-pri`  Custom Wireguard private key.
-  + `-pub`  Custom Wireguard public key. Default is the Warp public key.
-  
-For more usage instructions, please use `-h`.
-  
-## Note
+  + `-n`    200：指定延迟测试线程的数量。增加此值可以加快延迟测试过程，但不适合性能较低的设备，如路由器。默认值为 200，最大为 1000。
+  + `-t`    10：设置对每个 IP 地址执行延迟测试的次数。默认值为 10 次。
+  + `-q`    快速模式：快速扫描5000个地址结果。**默认打开**， 使用`-q=false` 关闭快速模式。
+  + `-o`    result.csv：设置输出结果文件。默认文件为 "result.csv"。
+  + `-full` 此标志表示应测试指定范围内的所有端口。
+  + `-pri`  自定义wireguard的私钥。
+  + `-pub`  自定义wireguard的公钥。默认为Warp的公钥
 
-Please note that adjusting test parameters can affect test speed and results. Choosing the appropriate settings is crucial based on the performance of your device and the specific conditions you want to apply.
+更多使用说明请使用`-h`。
 
-**Disclaimer**: This tool is not affiliated with or endorsed by Cloudflare. Please use it responsibly and comply with their terms of service.
+## 注意
+
+请注意，调整测试参数可能会影响测试速度和结果。根据设备的性能和您希望应用的特定条件选择合适的设置至关重要。
+
+**免责声明**： 本工具与 Cloudflare 无关，也未得到其认可。请负责任地使用并遵守其服务条款。
 
 ## License
 
-This software is released under the [GPL v3 license](LICENSE).
+此软件根据 [GPL v3 许可证](LICENSE) 发布
