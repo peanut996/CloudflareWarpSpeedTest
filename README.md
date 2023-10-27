@@ -22,11 +22,6 @@ brew tap peanut996/tap && brew install cloudflarewarpspeedtest
 winget install peanut996.CloudflareWarpSpeedTest
 ```
 
-#### Scoop
-```bash
-scoop bucket add extras && scoop install CloudflareWarpSpeedTest
-```
-
 #### Go Install
 使用go官方工具链安装(go版本<=1.20)
 
