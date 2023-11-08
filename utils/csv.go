@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	defaultOutput         = "result.csv"
+	defaultOutput         = "warp.csv"
 	maxDelay              = 9999 * time.Millisecond
 	minDelay              = 0 * time.Millisecond
 	maxLossRate   float32 = 1.0
@@ -70,12 +70,12 @@ func ExportCsv(data []CloudflareIPData) {
 	}
 	fp, err := os.Create(Output)
 	if err != nil {
-		log.Fatalf("创建文件[%s]失败：%v", Output, err)
+		log.Fatalf("Create file [%s] failed：%v", Output, err)
 		return
 	}
 	defer fp.Close()
 	w := csv.NewWriter(fp) //创建一个新的写入文件流
-	_ = w.Write([]string{"IP 地址", "丢包率", "平均延迟"})
+	_ = w.Write([]string{"IP:Port", "Loss", "Latency"})
 	_ = w.WriteAll(convertToString(data))
 	w.Flush()
 }
@@ -144,7 +144,7 @@ func (s PingDelaySet) Print() {
 		return
 	}
 	if len(s) <= 0 { // IP数组长度(IP数量) 大于 0 时继续
-		fmt.Println("\n[信息] 完整测速结果 IP 数量为 0，跳过输出结果。")
+		fmt.Println("\n[Info] The total number of IP addresses in the complete speed test results is 0, so skipping the output.")
 		return
 	}
 	dateString := convertToString(s) // 转为多维数组 [][]String
@@ -160,11 +160,11 @@ func (s PingDelaySet) Print() {
 			break
 		}
 	}
-	fmt.Printf(headFormat, "IP 地址", "丢包率", "平均延迟")
+	fmt.Printf(headFormat, "IP:Port", "Loss", "Latency")
 	for i := 0; i < PrintNum; i++ {
 		fmt.Printf(dataFormat, dateString[i][0], dateString[i][1], dateString[i][2])
 	}
 	if !noOutput() {
-		fmt.Printf("\n完整测速结果已写入 %v 文件，可使用记事本/表格软件查看。\n", Output)
+		fmt.Printf("\nComplete speed test results have been written to the %v file.\n", Output)
 	}
 }

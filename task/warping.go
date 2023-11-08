@@ -92,7 +92,7 @@ func NewWarping() *Warping {
 		ips:     ips,
 		csv:     make(utils.PingDelaySet, 0),
 		control: make(chan bool, Routines),
-		bar:     utils.NewBar(len(ips), "可用:", ""),
+		bar:     utils.NewBar(len(ips), "Available:", ""),
 	}
 }
 
