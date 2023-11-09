@@ -147,22 +147,15 @@ func (s PingDelaySet) Print() {
 		fmt.Println("\n[Info] The total number of IP addresses in the complete speed test results is 0, so skipping the output.")
 		return
 	}
-	dateString := convertToString(s) // 转为多维数组 [][]String
-	if len(dateString) < PrintNum {  // 如果IP数组长度(IP数量) 小于  打印次数，则次数改为IP数量
-		PrintNum = len(dateString)
+	dataString := convertToString(s) // 转为多维数组 [][]String
+	if len(dataString) < PrintNum {  // 如果IP数组长度(IP数量) 小于  打印次数，则次数改为IP数量
+		PrintNum = len(dataString)
 	}
-	headFormat := "%-16s%-5s%-6s\n"
-	dataFormat := "%-18s%-8s%-10s\n"
-	for i := 0; i < PrintNum; i++ { // 如果要输出的 IP 中包含 IPv6，那么就需要调整一下间隔
-		if len(dateString[i][0]) > 15 {
-			headFormat = "%-40s%-5s%-6s\n"
-			dataFormat = "%-42s%-8s%-10s\n"
-			break
-		}
-	}
+	headFormat := "\n%-24s%-9s%-10s\n"
+	dataFormat := "%-25s%-8s%-10s\n"
 	fmt.Printf(headFormat, "IP:Port", "Loss", "Latency")
 	for i := 0; i < PrintNum; i++ {
-		fmt.Printf(dataFormat, dateString[i][0], dateString[i][1], dateString[i][2])
+		fmt.Printf(dataFormat, dataString[i][0], dataString[i][1], dataString[i][2])
 	}
 	if !noOutput() {
 		fmt.Printf("\nComplete speed test results have been written to the %v file.\n", Output)
