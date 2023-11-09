@@ -28,7 +28,7 @@ const (
 	defaultPingTimes            = 10
 	udpConnectTimeout           = time.Millisecond * 1000
 	wireguardHandshakeRespBytes = 92
-	quickModeMaxIpNum           = 100
+	quickModeMaxIpNum           = 1000
 	warpPublicKey               = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
 )
 
