@@ -3,3 +3,4 @@ Releases
 *.exe
 *.csv
 .idea
+.vscode
