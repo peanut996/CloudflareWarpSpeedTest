@@ -25,12 +25,12 @@ var (
 	PrintNum         = 10
 )
 
-// 是否打印测试结果
+
 func NoPrintResult() bool {
 	return PrintNum == 0
 }
 
-// 是否输出到文件
+
 func noOutput() bool {
 	return Output == "" || Output == " "
 }
@@ -47,7 +47,7 @@ type CloudflareIPData struct {
 	lossRate float32
 }
 
-// 计算丢包率
+
 func (cf *CloudflareIPData) getLossRate() float32 {
 	if cf.lossRate == 0 {
 		pingLost := cf.Sended - cf.Received
@@ -74,7 +74,7 @@ func ExportCsv(data []CloudflareIPData) {
 		return
 	}
 	defer fp.Close()
-	w := csv.NewWriter(fp) //创建一个新的写入文件流
+	w := csv.NewWriter(fp) 
 	_ = w.Write([]string{"IP:Port", "Loss", "Latency"})
 	_ = w.WriteAll(convertToString(data))
 	w.Flush()
@@ -88,39 +88,38 @@ func convertToString(data []CloudflareIPData) [][]string {
 	return result
 }
 
-// 延迟丢包排序
+
 type PingDelaySet []CloudflareIPData
 
-// 延迟条件过滤
+
 func (s PingDelaySet) FilterDelay() (data PingDelaySet) {
-	if InputMaxDelay > maxDelay || InputMinDelay < minDelay { // 当输入的延迟条件不在默认范围内时，不进行过滤
+	if InputMaxDelay > maxDelay || InputMinDelay < minDelay { 
 		return s
 	}
-	if InputMaxDelay == maxDelay && InputMinDelay == minDelay { // 当输入的延迟条件为默认值时，不进行过滤
+	if InputMaxDelay == maxDelay && InputMinDelay == minDelay { 
 		return s
 	}
 	for _, v := range s {
-		if v.Delay > InputMaxDelay { // 平均延迟上限，延迟大于条件最大值时，后面的数据都不满足条件，直接跳出循环
+		if v.Delay > InputMaxDelay { 
 			break
 		}
-		if v.Delay < InputMinDelay { // 平均延迟下限，延迟小于条件最小值时，不满足条件，跳过
+		if v.Delay < InputMinDelay { 
 			continue
 		}
-		data = append(data, v) // 延迟满足条件时，添加到新数组中
+		data = append(data, v) 
 	}
 	return
 }
 
-// 丢包条件过滤
 func (s PingDelaySet) FilterLossRate() (data PingDelaySet) {
-	if InputMaxLossRate >= maxLossRate { // 当输入的丢包条件为默认值时，不进行过滤
+	if InputMaxLossRate >= maxLossRate { 
 		return s
 	}
 	for _, v := range s {
-		if v.getLossRate() > InputMaxLossRate { // 丢包几率上限
+		if v.getLossRate() > InputMaxLossRate { 
 			break
 		}
-		data = append(data, v) // 丢包率满足条件时，添加到新数组中
+		data = append(data, v) 
 	}
 	return
 }
@@ -143,16 +142,22 @@ func (s PingDelaySet) Print() {
 	if NoPrintResult() {
 		return
 	}
-	if len(s) <= 0 { // IP数组长度(IP数量) 大于 0 时继续
+	if len(s) <= 0 { 
 		fmt.Println("\n[Info] The total number of IP addresses in the complete speed test results is 0, so skipping the output.")
 		return
 	}
-	dataString := convertToString(s) // 转为多维数组 [][]String
-	if len(dataString) < PrintNum {  // 如果IP数组长度(IP数量) 小于  打印次数，则次数改为IP数量
+	dataString := convertToString(s) 
+	if len(dataString) < PrintNum { 
 		PrintNum = len(dataString)
 	}
 	headFormat := "\n%-24s%-9s%-10s\n"
 	dataFormat := "%-25s%-8s%-10s\n"
+	for i := 0; i < PrintNum; i++ {
+		if len(dataString[i][0]) > 15 {
+			headFormat = "\n%-44s%-9s%-10s\n"
+			dataFormat = "%-45s%-8s%-10s\n"
+		}
+	}
 	fmt.Printf(headFormat, "IP:Port", "Loss", "Latency")
 	for i := 0; i < PrintNum; i++ {
 		fmt.Printf(dataFormat, dataString[i][0], dataString[i][1], dataString[i][2])

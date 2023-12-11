@@ -69,7 +69,7 @@ var (
 	}
 
 	commonIPv6CIDRs = []string{
-		"2606:4700:100::/48",
+		"2606:4700:d0::/48",
 	}
 
 	MaxWarpPortRange = 10000
