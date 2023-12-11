@@ -39,6 +39,8 @@ var (
 
 	QuickMode = false
 
+	IPv6Mode = false
+
 	ScanAllPort = false
 
 	Routines = defaultRoutines
@@ -53,7 +55,7 @@ var (
 		4198, 4233, 4500, 5279, 5956, 7103, 7152, 7156, 7281, 7559, 8319, 8742, 8854, 8886,
 	}
 
-	commonWarpCIDRs = []string{
+	commonIPv4CIDRs = []string{
 		"162.159.192.0/24",
 		"162.159.193.0/24",
 		"162.159.195.0/24",
@@ -62,6 +64,10 @@ var (
 		"188.114.97.0/24",
 		"188.114.98.0/24",
 		"188.114.99.0/24",
+	}
+
+	commonIPv6CIDRs = []string{
+		"2606:4700:100::/48",
 	}
 
 	MaxWarpPortRange = 10000

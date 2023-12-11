@@ -134,7 +134,7 @@ func (r *IPRanges) chooseIPv6() {
 }
 
 func loadIPRanges() []*net.IPAddr {
-	ranges := newIPRanges()
+	ipRanges := newIPRanges()
 	if IPText != "" {
 		IPs := strings.Split(IPText, ",")
 		for _, IP := range IPs {
@@ -142,11 +142,11 @@ func loadIPRanges() []*net.IPAddr {
 			if IP == "" {
 				continue
 			}
-			ranges.parseCIDR(IP)
+			ipRanges.parseCIDR(IP)
 			if isIPv4(IP) {
-				ranges.chooseIPv4()
+				ipRanges.chooseIPv4()
 			} else {
-				ranges.chooseIPv6()
+				ipRanges.chooseIPv6()
 			}
 		}
 	} else if IPFile != "" {
@@ -161,20 +161,26 @@ func loadIPRanges() []*net.IPAddr {
 			if line == "" {
 				continue
 			}
-			ranges.parseCIDR(line)
+			ipRanges.parseCIDR(line)
 			if isIPv4(line) {
-				ranges.chooseIPv4()
+				ipRanges.chooseIPv4()
 			} else {
-				ranges.chooseIPv6()
+				ipRanges.chooseIPv6()
 			}
 		}
 	} else {
-		for _, cidr := range commonWarpCIDRs {
-			ranges.parseCIDR(cidr)
+		cidrRanges := commonIPv4CIDRs
+		if IPv6Mode {
+			cidrRanges = commonIPv6CIDRs
+		}
+		for _, cidr := range cidrRanges {
+			ipRanges.parseCIDR(cidr)
 			if isIPv4(cidr) {
-				ranges.chooseIPv4()
+				ipRanges.chooseIPv4()
+			} else {
+				ipRanges.chooseIPv6()
 			}
 		}
 	}
-	return ranges.ips
+	return ipRanges.ips
 }

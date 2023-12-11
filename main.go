@@ -27,6 +27,8 @@ Parameters:
         Number of latency tests; the number of times to test latency for a single IP; (default 10 times)
     -q
         Quick mode; test results for randomly scanning 1000 addresses; on by default, [-q=false] turns off quick mode
+    -ipv6
+        IPv6 support. Only effect when not provide extra ip cidr.
     -tl 300
         Average latency upper limit; only output IPs with average latency lower than the specified limit, various upper and lower limit conditions can be used together; (default 300 ms)
     -tll 40
@@ -66,6 +68,7 @@ Parameters:
 
 	flag.BoolVar(&task.ScanAllPort, "full", false, "Scan all ports")
 	flag.BoolVar(&task.QuickMode, "q", true, "Quick mode, test results for randomly scanning 1000 IPs")
+	flag.BoolVar(&task.IPv6Mode, "ipv6", false, "IPv6 support. Only effect when not provide extra ip cidr.")
 	flag.IntVar(&utils.PrintNum, "p", 10, "Number of results to display")
 	flag.StringVar(&task.IPFile, "f", "", "IP segment data file")
 	flag.StringVar(&task.IPText, "ip", "", "Specify IP segment data")
