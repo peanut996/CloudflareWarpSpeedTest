@@ -1,0 +1,29 @@
+### register new warp profile
+POST https://api.cloudflareclient.com/v0i1909051800/reg
+Content-Type: application/json
+Authorization: Bearer
+user-agent: okhttp/3.12.1
+
+{
+  "install_id": "",
+  "tos": "2023-12-11T03:38:26.000Z",
+  "key": "{{pub}}",
+  "fcm_token": "",
+  "type": "ios",
+  "locale": "en_US"
+}
+
+
+### enable the warp
+PATCH https://api.cloudflareclient.com/v0i1909051800/reg/{{regid}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+User-Agent: okhttp/3.12.1
+
+{"warp_enabled":true}
+
+### get the profile
+GET https://api.cloudflareclient.com/v0i1909051800/reg/{{regid}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+User-Agent: okhttp/3.12.1
