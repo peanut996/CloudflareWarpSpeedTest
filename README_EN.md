@@ -49,14 +49,15 @@ CloudflareWarpSpeedTest -n 200 -t 10 -tl 300 -q -tll 0 -tlr 0.2 -sl 5 -p 10 -f i
 
 Here is an explanation of the main available options:
 
-  + `-n`    200: Specifies the number of latency test threads. Increasing this value can speed up the latency testing process, but it may not be suitable for lower-performance devices like routers. The default value is 200, with a maximum of 1000.
-  + `-t`    10: Sets the number of times latency tests are performed for each IP address. The default value is 10 times.
-  + `-q`    Quick mode: Quickly scan results for 1000 addresses. **Default is on**, use `-q=false` to turn off quick mode.
-  + `-ipv6` IPv6 mode. Only scan ipv6 addresses. 
-  + `-o`    result.csv: Sets the output result file. The default file is \"result.csv\".
-  + `-full` This flag indicates that all ports within the specified range should be tested.
-  + `-pri`  Custom Wireguard private key.
-  + `-pub`  Custom Wireguard public key. Default is the Warp public key.
+  + `-n`        200: Specifies the number of latency test threads. Increasing this value can speed up the latency testing process, but it may not be suitable for lower-performance devices like routers. The default value is 200, with a maximum of 1000.
+  + `-t`        10: Sets the number of times latency tests are performed for each IP address. The default value is 10 times.
+  + `-q`        Quick mode: Quickly scan results for 1000 addresses. **Default is on**, use `-q=false` to turn off quick mode.
+  + `-ipv6`     IPv6 mode. Only scan ipv6 addresses. 
+  + `-o`        result.csv: Sets the output result file. The default file is \"result.csv\".
+  + `-full`     This flag indicates that all ports within the specified range should be tested.
+  + `-pri`      Custom Wireguard private key.
+  + `-pub`      Custom Wireguard public key. Default is the Warp public key.
+  + `-reserved` Custom Reserved. Format: `[0, 0, 0]`
   
 For more usage instructions, please use `-h`.
   
