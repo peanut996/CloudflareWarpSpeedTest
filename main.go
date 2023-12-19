@@ -49,6 +49,8 @@ Parameters:
         Specify your WireGuard private key
     -pub PublicKey
         Specify your WireGuard public key, default is the Warp public key
+    -reserved Reserved
+        Add custom reserved field. format: [0, 0, 0]
     -full
         Test all ports; test all ports for each IP in the IP segment
     -h
@@ -75,6 +77,7 @@ Parameters:
 	flag.StringVar(&utils.Output, "o", "result.csv", "Output result file")
 	flag.StringVar(&task.PrivateKey, "pri", "", "Specify private key")
 	flag.StringVar(&task.PrivateKey, "pub", "", "Specify public key")
+	flag.StringVar(&task.ReservedString, "reserved", "", "Add custom reserved field")
 	flag.BoolVar(&printVersion, "v", false, "Print program version")
 
 	flag.Usage = func() { fmt.Print(help) }

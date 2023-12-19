@@ -46,7 +46,9 @@ var (
 
 	ScanAllPort = false
 
-	Reserved = [3]byte{0, 0, 0}
+	ReservedString = ""
+
+	reserved = [3]byte{60, 189, 175}
 
 	Routines = defaultRoutines
 
@@ -73,7 +75,7 @@ var (
 
 	MaxWarpPortRange = 10000
 
-	warpHandshakePacket, _ = hex.DecodeString("0100000030ec356d08af3939c1b09d3143c2e3773be539e4c7be2e2996e043f1871497be7ed28138b0473350f28647ca3013fe8de10f1ec7e448542c0ef0f0c5b2976455b6bc3f0224d06f14abfbabb7fc8753865f6dad38d7b1c2156c6cea13f57edc39c6627139659075a1c25d49743a86a40517ec45cf8e151bf0796b3f992070839600000000000000000000000000000000")
+	warpHandshakePacket, _ = hex.DecodeString("013cbdafb4135cac96a29484d7a0175ab152dd3e59be35049beadf758b8d48af14ca65f25a168934746fe8bc8867b1c17113d71c0fac5c141ef9f35783ffa5357c9871f4a006662b83ad71245a862495376a5fe3b4f2e1f06974d748416670e5f9b086297f652e6dfbf742fbfc63c3d8aeb175a3e9b7582fbc67c77577e4c0b32b05f92900000000000000000000000000000000")
 )
 
 type MessageInitiation struct {
@@ -287,6 +289,17 @@ func shuffleAddrs(udpAddrs *[]*UDPAddr) {
 }
 
 func InitHandshakePacket() {
+	if ReservedString != "" {
+		if PrivateKey == "" {
+			log.Fatalln("Reserved field must be used with private key")
+		}
+		r, err := utils.ParseReservedString(ReservedString)
+		if err != nil {
+			log.Fatalln("Failed to parse reserved, it must be 3 bytes slice: " + err.Error())
+		}
+		reserved = r
+	}
+
 	if PrivateKey == "" && PublicKey == "" {
 		return
 	}
@@ -343,7 +356,7 @@ func buildHandshakePacket(pri device.NoisePrivateKey, pub device.NoisePublicKey)
 }
 
 func AddReserved(packet []byte) {
-	packet[1], packet[2], packet[3] = Reserved[0], Reserved[1], Reserved[2]
+	packet[1], packet[2], packet[3] = reserved[0], reserved[1], reserved[2]
 }
 
 func getNoisePrivateKeyFromBase64(b string) (device.NoisePrivateKey, error) {
