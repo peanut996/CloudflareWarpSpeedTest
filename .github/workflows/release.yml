@@ -34,4 +34,4 @@ jobs:
         project_path: "."
         binary_name: "CloudflareWarpSpeedTest"
         goversion: "1.20"
-        ldflags: "-X main.Version=${{ env.APP_VERSION }}"
+        ldflags: "-X main.Version=${{ env.APP_VERSION }} -linkmode 'external' -extldflags '-static'"
