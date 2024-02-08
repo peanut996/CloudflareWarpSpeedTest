@@ -5,7 +5,7 @@
 # CloudflareWarpSpeedTest
 
 ## Introduction
-Cloudflare Warp Speed Test is a command-line tool for testing the latency and speed of Cloudflare Warp IP addresses and obtaining information about the minimum latency and available ports. It provides various options to customize test parameters and filter results based on specific conditions.
+Cloudflare WARP Speed Test is a command-line tool for testing the latency and speed of Cloudflare WARP IP addresses and obtaining information about the minimum latency and available ports. It provides various options to customize test parameters and filter results based on specific conditions.
 
 Inspired(Copied) by [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)
 
@@ -41,7 +41,7 @@ go to [Releases](https://github.com/peanut996/CloudflareWarpSpeedTest/releases) 
 
 ## Usage
 
-To use Cloudflare Warp Speed Test, you can run the following command-line options:
+To use CloudflareWarpSpeedTest, you can run the following command-line options:
 
 ```bash
 CloudflareWarpSpeedTest -n 200 -t 10 -tl 300 -q -tll 0 -tlr 0.2 -sl 5 -p 10 -f ip.txt -ip 1.1.1.1 -o result.csv -full
