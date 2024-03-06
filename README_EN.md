@@ -70,3 +70,6 @@ Please note that adjusting test parameters can affect test speed and results. Ch
 ## License
 
 This software is released under the [GPL v3 license](LICENSE).
+
+## Supported By
+<a href="https://jb.gg/OpenSourceSupport" target="_blank"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" height='128' style='border:0px;height:128px;' alt="JetBrains Logo (Main) logo."></a>
