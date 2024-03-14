@@ -73,3 +73,8 @@ CloudflareWarpSpeedTest -n 200 -t 10 -tl 300 -q -tll 0 -tlr 0.2 -sl 5 -p 10 -f i
 
 ## Supported By
 <a href="https://jb.gg/OpenSourceSupport" target="_blank"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" height='128' style='border:0px;height:128px;' alt="JetBrains Logo (Main) logo."></a>
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=peanut996/CloudflareWarpSpeedTest&type=Date)](https://star-history.com/#peanut996/CloudflareWarpSpeedTest&Date)
+
