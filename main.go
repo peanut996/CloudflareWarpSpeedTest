@@ -35,8 +35,6 @@ Parameters:
         Average latency lower limit; only output IPs with average latency higher than the specified limit; (default 0 ms)
     -tlr 0.2
         Packet loss rate upper limit; only output IPs with packet loss rate lower than or equal to the specified rate, range 0.00~1.00, 0 filters out any IPs with packet loss; (default 1.00)
-    -sl 5
-        Download speed lower limit; only output IPs with download speed higher than the specified speed, testing stops when reaching the specified quantity [-dn]; (default 0.00 MB/s)
     -p 10
         Number of results to display; directly display the specified number of results after testing, 0 means not displaying results and exiting directly; (default 10)
     -f ip.txt
