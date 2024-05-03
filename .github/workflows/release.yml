@@ -35,6 +35,9 @@ jobs:
         fi
         echo "LD_FLAGS=$LD_FLAGS" >> ${GITHUB_ENV}
 
+    - name: Install cross compiler
+      run: sudo apt-get -y install gcc-aarch64-linux-gnu
+
     - uses: wangyoucao577/go-release-action@v1
       env:
         CGO_ENABLED: 1
