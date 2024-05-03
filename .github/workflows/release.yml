@@ -41,7 +41,7 @@ jobs:
     - uses: wangyoucao577/go-release-action@v1
       env:
         CGO_ENABLED: 1
-        CC: aarch64-linux-gnu-gcc
+        CC: gcc-aarch64-linux-gnu
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: ${{ matrix.goos }}
