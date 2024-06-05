@@ -19,7 +19,7 @@ jobs:
       matrix:
         # build and publish in parallel: linux/386, linux/amd64, linux/arm64, windows/386, windows/amd64, darwin/amd64, darwin/arm64
         goos: [linux, windows, darwin]
-        goarch: [amd64]
+        goarch: [amd64, arm64]
     steps:
     - uses: actions/checkout@v3
 
@@ -28,7 +28,7 @@ jobs:
 
     - name: Set ldflags as environment variable
       run: |
-        if [ ${{ matrix.goos }} == 'linux' ]; then
+        if [ ${{ matrix.goos }} == 'linux' ]&&[ ${{ matrix.goarch }} == 'amd64' ]; then
           LD_FLAGS="-X main.Version=${{ env.APP_VERSION }} -linkmode 'external' -extldflags '-static'"
         else
           LD_FLAGS="-X main.Version=${{ env.APP_VERSION }}"
