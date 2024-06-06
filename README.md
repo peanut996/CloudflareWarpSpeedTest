@@ -43,7 +43,7 @@ go install github.com/peanut996/CloudflareWarpSpeedTest@latest
 要使用 CloudflareWarpSpeedTest，您可以运行以下命令行选项
 
 ```bash
-CloudflareWarpSpeedTest -n 200 -t 10 -tl 300 -q -tll 0 -tlr 0.2 -sl 5 -p 10 -f ip.txt -ip 1.1.1.1 -o result.csv -full
+CloudflareWarpSpeedTest -n 200 -t 10 -tl 300 -q -tll 0 -tlr 0.2 -p 10 -f ip.txt -ip 1.1.1.1 -o result.csv -full
 ```
 
 以下是主要可用选项的解释：
