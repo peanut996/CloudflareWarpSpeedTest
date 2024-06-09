@@ -67,7 +67,7 @@ Parameters:
 	flag.IntVar(&minDelay, "tll", 0, "Average latency lower limit")
 	flag.Float64Var(&maxLossRate, "tlr", 1, "Packet loss rate upper limit")
 
-	flag.BoolVar(&task.AllMode, "all", true, "All mode, test results for all IPs")
+	flag.BoolVar(&task.AllMode, "all", false, "All mode, test results for all IPs")
 	flag.BoolVar(&task.IPv6Mode, "ipv6", false, "IPv6 support. Only effect when not provide extra ip cidr.")
 	flag.IntVar(&utils.PrintNum, "p", 10, "Number of results to display")
 	flag.StringVar(&task.IPFile, "f", "", "IP segment data file")
