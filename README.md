@@ -43,19 +43,20 @@ go install github.com/peanut996/CloudflareWarpSpeedTest@latest
 要使用 CloudflareWarpSpeedTest，您可以运行以下命令行选项
 
 ```bash
-CloudflareWarpSpeedTest -n 200 -t 10 -tl 300 -q -tll 0 -tlr 0.2 -p 10 -f ip.txt -ip 1.1.1.1 -o result.csv -full
+CloudflareWarpSpeedTest -n 200 -t 10 -tl 300 -ip-number 1000 -tll 0 -tlr 0.2 -p 10 -f ip.txt -ip 1.1.1.1 -o result.csv -full
 ```
 
 以下是主要可用选项的解释：
 
-  + `-n`        200：指定延迟测试线程的数量。增加此值可以加快延迟测试过程，但不适合性能较低的设备，如路由器。默认值为 200，最大为 1000。
-  + `-t`        10：设置对每个 IP 地址执行延迟测试的次数。默认值为 10 次。
-  + `-q`        快速模式：快速扫描1000个地址结果。**默认打开**， 使用`-q=false` 关闭快速模式。
-  + `-ipv6`     ipv6模式：仅扫描ipv6地址。
-  + `-o`        result.csv：设置输出结果文件。默认文件为 "result.csv"。
-  + `-full`     此标志表示应测试指定范围内的所有端口。
-  + `-pri`      自定义wireguard的私钥。
-  + `-pub`      自定义wireguard的公钥。默认为WARP的公钥。
+  + `-n 200` 指定延迟测试线程的数量。增加此值可以加快延迟测试过程，但不适合性能较低的设备，如路由器。默认值为 200，最大为 1000。
+  + `-t 10` 设置对每个 IP 地址执行延迟测试的次数。默认值为 10 次。
+  + `-ip-number 1000` 扫描1000个地址结果。默认值为 10 次。使用`-all-ips`时无效。
+  + `-all-ips` 扫描全部IP。
+  + `-ipv6` ipv6模式，仅扫描ipv6地址。
+  + `-o result.csv` 设置输出结果文件。默认文件为 "result.csv"。
+  + `-full` 此标志表示应测试指定范围内的所有端口。
+  + `-pri` 自定义wireguard的私钥。
+  + `-pub` 自定义wireguard的公钥。默认为WARP的公钥。
   + `-reserved` 自定义Reserved字段。格式为`[0, 0, 0]`
 
 更多使用说明请使用`-h`。
