@@ -41,7 +41,7 @@ var (
 
 	AllIPsMode = false
 
-  	IPNumberToDetect = 1000
+  	IPNumberToScan = 1000
 
 	IPv6Mode = false
 
@@ -181,8 +181,8 @@ func (w *Warping) appendIPData(data *utils.PingData) {
 func loadWarpIPRanges() (ipAddrs []*UDPAddr) {
 	ips := loadIPRanges()
 	addrs := generateIPAddrs(ips)
-	if !AllIPsMode && len(addrs) > IPNumberToDetect {
-		return addrs[:IPNumberToDetect]
+	if !AllIPsMode && len(addrs) > IPNumberToScan {
+		return addrs[:IPNumberToScan]
 	}
 	return addrs
 }
