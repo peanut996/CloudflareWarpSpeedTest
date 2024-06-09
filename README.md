@@ -44,7 +44,7 @@ go to [Releases](https://github.com/peanut996/CloudflareWarpSpeedTest/releases) 
 To use CloudflareWarpSpeedTest, you can run the following command-line options:
 
 ```bash
-CloudflareWarpSpeedTest -n 200 -t 10 -tl 300 -q -tll 0 -tlr 0.2 -p 10 -f ip.txt -ip 1.1.1.1 -o result.csv -full
+CloudflareWarpSpeedTest -n 200 -t 10 -c 5000 -tl 300 -q -tll 0 -tlr 0.2 -p 10 -f ip.txt -ip 1.1.1.1 -o result.csv -all
 ```
 
 Here is an explanation of the main available options:
