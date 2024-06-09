@@ -31,7 +31,6 @@ const (
 	defaultPingTimes            = 10
 	udpConnectTimeout           = time.Millisecond * 1000
 	wireguardHandshakeRespBytes = 92
-	quickModeMaxIpNum           = 1000
 	warpPublicKey               = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
 )
 
@@ -40,7 +39,9 @@ var (
 
 	PublicKey string
 
-	QuickMode = false
+	AllIPsMode = false
+
+  	IPNumberToDetect = 1000
 
 	IPv6Mode = false
 
@@ -180,8 +181,8 @@ func (w *Warping) appendIPData(data *utils.PingData) {
 func loadWarpIPRanges() (ipAddrs []*UDPAddr) {
 	ips := loadIPRanges()
 	addrs := generateIPAddrs(ips)
-	if QuickMode && len(addrs) > quickModeMaxIpNum {
-		return addrs[:quickModeMaxIpNum]
+	if !AllIPsMode && len(addrs) > IPNumberToDetect {
+		return addrs[:IPNumberToDetect]
 	}
 	return addrs
 }
