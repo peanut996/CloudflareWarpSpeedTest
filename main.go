@@ -25,8 +25,10 @@ Parameters:
         Latency test threads; the more threads, the faster the latency test, but do not set it too high on low-performance devices (such as routers); (default 200, maximum 1000)
     -t 10
         Number of latency tests; the number of times to test latency for a single IP; (default 10 times)
-    -q
-        Quick mode; test results for randomly scanning 1000 addresses; on by default, [-q=false] turns off quick mode
+    -c 5000
+        Number of addressed to be scanned; (default 5000)
+    -all
+        All mode; test results for all addresses; Disabled by default, [-all] turns on all mode.
     -ipv6
         IPv6 support. Only effect when not provide extra ip cidr.
     -tl 300
@@ -49,8 +51,6 @@ Parameters:
         Specify your WireGuard public key, default is the Warp public key
     -reserved Reserved
         Add custom reserved field. format: [0, 0, 0]
-    -full
-        Test all ports; test all ports for each IP in the IP segment
     -h
         Print the help explanation
     -v 
@@ -61,13 +61,13 @@ Parameters:
 	var maxLossRate float64
 	flag.IntVar(&task.Routines, "n", 200, "Latency test threads")
 	flag.IntVar(&task.PingTimes, "t", 10, "Number of latency test times")
+	flag.IntVar(&task.MaxScanCount, "c", 5000, "Number of addr count")
 
 	flag.IntVar(&maxDelay, "tl", 300, "Average latency upper limit")
 	flag.IntVar(&minDelay, "tll", 0, "Average latency lower limit")
 	flag.Float64Var(&maxLossRate, "tlr", 1, "Packet loss rate upper limit")
 
-	flag.BoolVar(&task.ScanAllPort, "full", false, "Scan all ports")
-	flag.BoolVar(&task.QuickMode, "q", true, "Quick mode, test results for randomly scanning 1000 IPs")
+	flag.BoolVar(&task.AllMode, "all", true, "All mode, test results for all IPs")
 	flag.BoolVar(&task.IPv6Mode, "ipv6", false, "IPv6 support. Only effect when not provide extra ip cidr.")
 	flag.IntVar(&utils.PrintNum, "p", 10, "Number of results to display")
 	flag.StringVar(&task.IPFile, "f", "", "IP segment data file")

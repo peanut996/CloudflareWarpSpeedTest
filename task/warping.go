@@ -31,7 +31,6 @@ const (
 	defaultPingTimes            = 10
 	udpConnectTimeout           = time.Millisecond * 1000
 	wireguardHandshakeRespBytes = 92
-	quickModeMaxIpNum           = 1000
 	warpPublicKey               = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
 )
 
@@ -40,11 +39,9 @@ var (
 
 	PublicKey string
 
-	QuickMode = false
+	AllMode = false
 
 	IPv6Mode = false
-
-	ScanAllPort = false
 
 	ReservedString = ""
 
@@ -53,6 +50,8 @@ var (
 	Routines = defaultRoutines
 
 	PingTimes = defaultPingTimes
+
+	MaxScanCount = 5000
 
 	ports = []int{
 		500, 854, 859, 864, 878, 880, 890, 891, 894, 903,
@@ -180,21 +179,15 @@ func (w *Warping) appendIPData(data *utils.PingData) {
 func loadWarpIPRanges() (ipAddrs []*UDPAddr) {
 	ips := loadIPRanges()
 	addrs := generateIPAddrs(ips)
-	if QuickMode && len(addrs) > quickModeMaxIpNum {
-		return addrs[:quickModeMaxIpNum]
+	if !AllMode && len(addrs) > MaxScanCount {
+		return addrs[:MaxScanCount]
 	}
 	return addrs
 }
 
 func generateIPAddrs(ips []*net.IPAddr) (udpAddrs []*UDPAddr) {
-	if !ScanAllPort {
-		for _, port := range ports {
-			udpAddrs = append(udpAddrs, generateSingleIPAddr(ips, port)...)
-		}
-	} else {
-		for port := 1; port <= MaxWarpPortRange; port++ {
-			udpAddrs = append(udpAddrs, generateSingleIPAddr(ips, port)...)
-		}
+	for _, port := range ports {
+		udpAddrs = append(udpAddrs, generateSingleIPAddr(ips, port)...)
 	}
 	shuffleAddrs(&udpAddrs)
 	return udpAddrs
