@@ -25,8 +25,10 @@ Parameters:
         Latency test threads; the more threads, the faster the latency test, but do not set it too high on low-performance devices (such as routers); (default 200, maximum 1000)
     -t 10
         Number of latency tests; the number of times to test latency for a single IP; (default 10 times)
-    -q
-        Quick mode; test results for randomly scanning 1000 addresses; on by default, [-q=false] turns off quick mode
+    -ip-number
+        IP Number to detect.
+    -all-ips
+        Detect all IPs.
     -ipv6
         IPv6 support. Only effect when not provide extra ip cidr.
     -tl 300
@@ -67,7 +69,8 @@ Parameters:
 	flag.Float64Var(&maxLossRate, "tlr", 1, "Packet loss rate upper limit")
 
 	flag.BoolVar(&task.ScanAllPort, "full", false, "Scan all ports")
-	flag.BoolVar(&task.QuickMode, "q", true, "Quick mode, test results for randomly scanning 1000 IPs")
+	flag.IntVar(&task.IPNumberToDetect, "ip-number", 1000, "IP Number to detect. Default is 1000.")
+	flag.BoolVar(&task.AllIPsMode, "all-ips", false, "Detect all IPs. Default is false.")
 	flag.BoolVar(&task.IPv6Mode, "ipv6", false, "IPv6 support. Only effect when not provide extra ip cidr.")
 	flag.IntVar(&utils.PrintNum, "p", 10, "Number of results to display")
 	flag.StringVar(&task.IPFile, "f", "", "IP segment data file")
