@@ -28,6 +28,12 @@ scoop bucket add peanut996 https://github.com/peanut996/scoop-bucket
 scoop install peanut996/cloudflarewarpspeedtest
 ```
 
+#### Archlinux(AUR)
+Require `paru` or `yay`.  
+```bash
+paru -S cloudflarewarpspeedtest-bin
+```
+
 #### Go Install
 use go tool to install(go version <= 1.20)
 
