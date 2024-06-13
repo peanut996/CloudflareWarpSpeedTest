@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"flag"
 	"fmt"
 	"os"
@@ -19,13 +20,16 @@ var (
 	Version string
 )
 
+//go:embed locale/i18n.*.toml
+var LocaleFS embed.FS
+
 func init() {
 	var printVersion bool
 	lang := os.Getenv("LANG")
-	var bundle = i18n.NewBundle(language.English)
+	bundle := i18n.NewBundle(language.English)
 	bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
-	bundle.LoadMessageFile("locale/i18n.en.toml")
-	bundle.LoadMessageFile("locale/i18n.zh.toml")
+	bundle.LoadMessageFileFS(LocaleFS, "locale/i18n.en.toml")
+	bundle.LoadMessageFileFS(LocaleFS, "locale/i18n.zh.toml")
 	localizer := i18n.NewLocalizer(bundle, strings.Split(lang, ".")[0])
 
 	var minDelay, maxDelay int
