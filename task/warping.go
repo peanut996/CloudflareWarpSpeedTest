@@ -28,7 +28,7 @@ import (
 	"golang.zx2c4.com/wireguard/tun/netstack"
 )
 
-var localizer_wrping = i18n.Init_i18n("task/warping")
+var localizer_wrping = i18n.InitI18n("task/warping")
 
 const (
 	defaultRoutines             = 200
@@ -119,7 +119,7 @@ func NewWarping() *Warping {
 		ips:     ips,
 		csv:     make(utils.PingDelaySet, 0),
 		control: make(chan bool, Routines),
-		bar:     utils.NewBar(len(ips), i18n.Query_i18n(localizer_wrping, "Available:"), ""),
+		bar:     utils.NewBar(len(ips), i18n.QueryI18n(localizer_wrping, "Available:"), ""),
 	}
 }
 
@@ -275,11 +275,11 @@ func shuffleAddrs(udpAddrs *[]*UDPAddr) {
 func InitHandshakePacket() {
 	if ReservedString != "" {
 		if PrivateKey == "" {
-			log.Fatalln(i18n.Query_i18n(localizer_wrping, "Reserved field must be used with private key"))
+			log.Fatalln(i18n.QueryI18n(localizer_wrping, "Reserved field must be used with private key"))
 		}
 		r, err := utils.ParseReservedString(ReservedString)
 		if err != nil {
-			log.Fatalln(i18n.Query_i18n(localizer_wrping, "Failed to parse reserved, it must be 3 bytes slice: ") + err.Error())
+			log.Fatalln(i18n.QueryI18n(localizer_wrping, "Failed to parse reserved, it must be 3 bytes slice: ") + err.Error())
 		}
 		reserved = r
 	}
@@ -294,12 +294,12 @@ func InitHandshakePacket() {
 
 	pri, err := getNoisePrivateKeyFromBase64(PrivateKey)
 	if err != nil {
-		log.Fatalln(i18n.Query_i18n(localizer_wrping, "Failed to parse private key: ") + err.Error())
+		log.Fatalln(i18n.QueryI18n(localizer_wrping, "Failed to parse private key: ") + err.Error())
 	}
 
 	pub, err := getNoisePublicKeyFromBase64(PublicKey)
 	if err != nil {
-		log.Fatalln(i18n.Query_i18n(localizer_wrping, "Failed to parse public key: ") + err.Error())
+		log.Fatalln(i18n.QueryI18n(localizer_wrping, "Failed to parse public key: ") + err.Error())
 	}
 
 	packet := buildHandshakePacket(pri, pub)
@@ -310,7 +310,7 @@ func InitHandshakePacket() {
 func buildHandshakePacket(pri device.NoisePrivateKey, pub device.NoisePublicKey) []byte {
 	d, _, err := netstack.CreateNetTUN([]netip.Addr{}, []netip.Addr{}, 1480)
 	if err != nil {
-		log.Fatalln(i18n.Query_i18n(localizer_wrping, "Failed to build handshake packet: ") + err.Error())
+		log.Fatalln(i18n.QueryI18n(localizer_wrping, "Failed to build handshake packet: ") + err.Error())
 	}
 	dev := device.NewDevice(d, conn.NewDefaultBind(), device.NewLogger(0, ""))
 
@@ -318,11 +318,11 @@ func buildHandshakePacket(pri device.NoisePrivateKey, pub device.NoisePublicKey)
 
 	peer, err := dev.NewPeer(pub)
 	if err != nil {
-		log.Fatalln(i18n.Query_i18n(localizer_wrping, "Failed to build handshake packet: ") + err.Error())
+		log.Fatalln(i18n.QueryI18n(localizer_wrping, "Failed to build handshake packet: ") + err.Error())
 	}
 	msg, err := dev.CreateMessageInitiation(peer)
 	if err != nil {
-		log.Fatalln(i18n.Query_i18n(localizer_wrping, "Failed to build handshake packet: ") + err.Error())
+		log.Fatalln(i18n.QueryI18n(localizer_wrping, "Failed to build handshake packet: ") + err.Error())
 	}
 
 	var buf [device.MessageInitiationSize]byte
@@ -372,10 +372,10 @@ func getNoisePublicKeyFromBase64(b string) (device.NoisePublicKey, error) {
 func encodeBase64ToHex(key string) (string, error) {
 	decoded, err := base64.StdEncoding.DecodeString(key)
 	if err != nil {
-		return "", errors.New(i18n.Query_i18n(localizer_wrping, "Invalid base64 string: ") + key)
+		return "", errors.New(i18n.QueryI18n(localizer_wrping, "Invalid base64 string: ") + key)
 	}
 	if len(decoded) != 32 {
-		return "", errors.New(i18n.Query_i18n(localizer_wrping, "Noise key should be 32 bytes: ") + key)
+		return "", errors.New(i18n.QueryI18n(localizer_wrping, "Noise key should be 32 bytes: ") + key)
 	}
 	return hex.EncodeToString(decoded), nil
 }

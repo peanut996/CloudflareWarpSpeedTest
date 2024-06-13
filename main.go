@@ -19,30 +19,30 @@ func init() {
 	var printVersion bool
 	var minDelay, maxDelay int
 	var maxLossRate float64
-	localizer := i18n.Init_i18n("main")
-	flag.IntVar(&task.Routines, "n", 200, i18n.Query_i18n(localizer, "n"))
-	flag.IntVar(&task.PingTimes, "t", 10, i18n.Query_i18n(localizer, "t"))
-	flag.IntVar(&task.MaxScanCount, "c", 5000, i18n.Query_i18n(localizer, "c"))
+	localizer := i18n.InitI18n("main")
+	flag.IntVar(&task.Routines, "n", 200, i18n.QueryI18n(localizer, "n"))
+	flag.IntVar(&task.PingTimes, "t", 10, i18n.QueryI18n(localizer, "t"))
+	flag.IntVar(&task.MaxScanCount, "c", 5000, i18n.QueryI18n(localizer, "c"))
 
-	flag.IntVar(&maxDelay, "tl", 300, i18n.Query_i18n(localizer, "tl"))
-	flag.IntVar(&minDelay, "tll", 0, i18n.Query_i18n(localizer, "tll"))
-	flag.Float64Var(&maxLossRate, "tlr", 1, i18n.Query_i18n(localizer, "tlr"))
+	flag.IntVar(&maxDelay, "tl", 300, i18n.QueryI18n(localizer, "tl"))
+	flag.IntVar(&minDelay, "tll", 0, i18n.QueryI18n(localizer, "tll"))
+	flag.Float64Var(&maxLossRate, "tlr", 1, i18n.QueryI18n(localizer, "tlr"))
 
-	flag.BoolVar(&task.AllMode, "all", false, i18n.Query_i18n(localizer, "all"))
-	flag.BoolVar(&task.IPv6Mode, "ipv6", false, i18n.Query_i18n(localizer, "ipv6"))
-	flag.IntVar(&utils.PrintNum, "p", 10, i18n.Query_i18n(localizer, "p"))
-	flag.StringVar(&task.IPFile, "f", "", i18n.Query_i18n(localizer, "f"))
-	flag.StringVar(&task.IPText, "ip", "", i18n.Query_i18n(localizer, "ip"))
-	flag.StringVar(&utils.Output, "o", "result.csv", i18n.Query_i18n(localizer, "o"))
-	flag.StringVar(&task.PrivateKey, "pri", "", i18n.Query_i18n(localizer, "pri"))
-	flag.StringVar(&task.PrivateKey, "pub", "", i18n.Query_i18n(localizer, "pub"))
-	flag.StringVar(&task.ReservedString, "reserved", "", i18n.Query_i18n(localizer, "reserved"))
-	flag.BoolVar(&printVersion, "v", false, i18n.Query_i18n(localizer, "v"))
+	flag.BoolVar(&task.AllMode, "all", false, i18n.QueryI18n(localizer, "all"))
+	flag.BoolVar(&task.IPv6Mode, "ipv6", false, i18n.QueryI18n(localizer, "ipv6"))
+	flag.IntVar(&utils.PrintNum, "p", 10, i18n.QueryI18n(localizer, "p"))
+	flag.StringVar(&task.IPFile, "f", "", i18n.QueryI18n(localizer, "f"))
+	flag.StringVar(&task.IPText, "ip", "", i18n.QueryI18n(localizer, "ip"))
+	flag.StringVar(&utils.Output, "o", "result.csv", i18n.QueryI18n(localizer, "o"))
+	flag.StringVar(&task.PrivateKey, "pri", "", i18n.QueryI18n(localizer, "pri"))
+	flag.StringVar(&task.PrivateKey, "pub", "", i18n.QueryI18n(localizer, "pub"))
+	flag.StringVar(&task.ReservedString, "reserved", "", i18n.QueryI18n(localizer, "reserved"))
+	flag.BoolVar(&printVersion, "v", false, i18n.QueryI18n(localizer, "v"))
 
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, `CloudflareWarpSpeedTest `+`
 `+
-			Version+i18n.Query_i18n(localizer, "h"))
+			Version+i18n.QueryI18n(localizer, "h"))
 		flag.PrintDefaults()
 	}
 	flag.Parse()
