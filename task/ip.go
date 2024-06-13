@@ -20,8 +20,9 @@ var (
 	IPFile string
 )
 
-func InitRandSeed() {
-	rand.Seed(time.Now().UnixNano())
+func InitRandSeed() *rand.Rand {
+	source := rand.NewSource(time.Now().UnixNano())
+	return rand.New(source)
 }
 
 func isIPv4(ip string) bool {
@@ -32,7 +33,7 @@ func randIPEndWith(num byte) byte {
 	if num == 0 { // 对于 /32 这种单独的 IP
 		return byte(0)
 	}
-	return byte(rand.Intn(int(num)))
+	return byte(InitRandSeed().Intn(int(num)))
 }
 
 type IPRanges struct {
