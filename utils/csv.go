@@ -12,7 +12,7 @@ import (
 	i18n "github.com/peanut996/CloudflareWarpSpeedTest/locale"
 )
 
-var localizer_csv = i18n.InitI18n("utils/csv")
+var localizerCsv = i18n.InitI18n("utils/csv")
 
 const (
 	defaultOutput         = "warp.csv"
@@ -71,7 +71,7 @@ func ExportCsv(data []CloudflareIPData) {
 	}
 	fp, err := os.Create(Output)
 	if err != nil {
-		log.Fatalf(i18n.QueryTemplateI18n(localizer_csv, "Create file {{.Output}} failed：{{.err}}", map[string]interface{}{"Output": Output, "err": err}))
+		log.Fatalf(i18n.QueryTemplateI18n(localizerCsv, "Create file {{.Output}} failed：{{.err}}", map[string]interface{}{"Output": Output, "err": err}))
 		return
 	}
 	defer fp.Close()
@@ -142,7 +142,7 @@ func (s PingDelaySet) Print() {
 		return
 	}
 	if len(s) <= 0 {
-		fmt.Println(i18n.QueryI18n(localizer_csv, "\n[Info] The total number of IP addresses in the complete speed test results is 0, so skipping the output."))
+		fmt.Println(i18n.QueryI18n(localizerCsv, "\n[Info] The total number of IP addresses in the complete speed test results is 0, so skipping the output."))
 		return
 	}
 	dataString := convertToString(s)
@@ -157,11 +157,11 @@ func (s PingDelaySet) Print() {
 			dataFormat = "%-45s%-8s%-10s\n"
 		}
 	}
-	fmt.Printf(headFormat, "IP:Port", i18n.QueryI18n(localizer_csv, "Loss"), i18n.QueryI18n(localizer_csv, "Latency"))
+	fmt.Printf(headFormat, "IP:Port", i18n.QueryI18n(localizerCsv, "Loss"), i18n.QueryI18n(localizerCsv, "Latency"))
 	for i := 0; i < PrintNum; i++ {
 		fmt.Printf(dataFormat, dataString[i][0], dataString[i][1], dataString[i][2])
 	}
 	if !noOutput() {
-		fmt.Println(i18n.QueryTemplateI18n(localizer_csv, "\nComplete speed test results have been written to the {{..Output}} file.\n", map[string]interface{}{"Output": Output}))
+		fmt.Println(i18n.QueryTemplateI18n(localizerCsv, "\nComplete speed test results have been written to the {{..Output}} file.\n", map[string]interface{}{"Output": Output}))
 	}
 }
