@@ -1,0 +1,5 @@
+"Create file {{.Output}} failed：{{.err}}" = "Create file {{.Output}} failed：{{.err}}"
+"\n[Info] The total number of IP addresses in the complete speed test results is 0, so skipping the output." = "\n[Info] The total number of IP addresses in the complete speed test results is 0, so skipping the output."
+"\nComplete speed test results have been written to the {{..Output}} file.\n" = "\nComplete speed test results have been written to the {{..Output}} file.\n"
+"Loss" = "Loss"
+"Latency" = "Latency"

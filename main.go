@@ -1,62 +1,48 @@
 package main
 
 import (
-	"embed"
 	"flag"
 	"fmt"
 	"os"
-	"strings"
 	"time"
 
+	i18n "github.com/peanut996/CloudflareWarpSpeedTest/locale"
 	"github.com/peanut996/CloudflareWarpSpeedTest/task"
 	"github.com/peanut996/CloudflareWarpSpeedTest/utils"
-
-	"github.com/BurntSushi/toml"
-	"github.com/nicksnyder/go-i18n/v2/i18n"
-	"golang.org/x/text/language"
 )
 
 var (
 	Version string
 )
 
-//go:embed locale/i18n.*.toml
-var LocaleFS embed.FS
-
 func init() {
 	var printVersion bool
-	lang := os.Getenv("LANG")
-	bundle := i18n.NewBundle(language.English)
-	bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
-	bundle.LoadMessageFileFS(LocaleFS, "locale/i18n.en.toml")
-	bundle.LoadMessageFileFS(LocaleFS, "locale/i18n.zh.toml")
-	localizer := i18n.NewLocalizer(bundle, strings.Split(lang, ".")[0])
-
 	var minDelay, maxDelay int
 	var maxLossRate float64
-	flag.IntVar(&task.Routines, "n", 200, localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "n"}))
-	flag.IntVar(&task.PingTimes, "t", 10, localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "t"}))
-	flag.IntVar(&task.MaxScanCount, "c", 5000, localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "c"}))
+	localizer := i18n.Init_i18n("main")
+	flag.IntVar(&task.Routines, "n", 200, i18n.Query_i18n(localizer, "n"))
+	flag.IntVar(&task.PingTimes, "t", 10, i18n.Query_i18n(localizer, "t"))
+	flag.IntVar(&task.MaxScanCount, "c", 5000, i18n.Query_i18n(localizer, "c"))
 
-	flag.IntVar(&maxDelay, "tl", 300, localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "tl"}))
-	flag.IntVar(&minDelay, "tll", 0, localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "tll"}))
-	flag.Float64Var(&maxLossRate, "tlr", 1, localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "tlr"}))
+	flag.IntVar(&maxDelay, "tl", 300, i18n.Query_i18n(localizer, "tl"))
+	flag.IntVar(&minDelay, "tll", 0, i18n.Query_i18n(localizer, "tll"))
+	flag.Float64Var(&maxLossRate, "tlr", 1, i18n.Query_i18n(localizer, "tlr"))
 
-	flag.BoolVar(&task.AllMode, "all", false, localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "all"}))
-	flag.BoolVar(&task.IPv6Mode, "ipv6", false, localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "ipv6"}))
-	flag.IntVar(&utils.PrintNum, "p", 10, localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "p"}))
-	flag.StringVar(&task.IPFile, "f", "", localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "f"}))
-	flag.StringVar(&task.IPText, "ip", "", localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "ip"}))
-	flag.StringVar(&utils.Output, "o", "result.csv", localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "o"}))
-	flag.StringVar(&task.PrivateKey, "pri", "", localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "pri"}))
-	flag.StringVar(&task.PrivateKey, "pub", "", localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "pub"}))
-	flag.StringVar(&task.ReservedString, "reserved", "", localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "reserved"}))
-	flag.BoolVar(&printVersion, "v", false, localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "v"}))
+	flag.BoolVar(&task.AllMode, "all", false, i18n.Query_i18n(localizer, "all"))
+	flag.BoolVar(&task.IPv6Mode, "ipv6", false, i18n.Query_i18n(localizer, "ipv6"))
+	flag.IntVar(&utils.PrintNum, "p", 10, i18n.Query_i18n(localizer, "p"))
+	flag.StringVar(&task.IPFile, "f", "", i18n.Query_i18n(localizer, "f"))
+	flag.StringVar(&task.IPText, "ip", "", i18n.Query_i18n(localizer, "ip"))
+	flag.StringVar(&utils.Output, "o", "result.csv", i18n.Query_i18n(localizer, "o"))
+	flag.StringVar(&task.PrivateKey, "pri", "", i18n.Query_i18n(localizer, "pri"))
+	flag.StringVar(&task.PrivateKey, "pub", "", i18n.Query_i18n(localizer, "pub"))
+	flag.StringVar(&task.ReservedString, "reserved", "", i18n.Query_i18n(localizer, "reserved"))
+	flag.BoolVar(&printVersion, "v", false, i18n.Query_i18n(localizer, "v"))
 
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, `CloudflareWarpSpeedTest `+`
 `+
-			Version+localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "h"}))
+			Version+i18n.Query_i18n(localizer, "h"))
 		flag.PrintDefaults()
 	}
 	flag.Parse()

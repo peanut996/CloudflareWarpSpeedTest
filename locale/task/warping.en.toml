@@ -1,0 +1,8 @@
+"Available:" = "Available:"
+"Reserved field must be used with private key" = "Reserved field must be used with private key"
+"Failed to parse reserved, it must be 3 bytes slice: " = "Failed to parse reserved, it must be 3 bytes slice: "
+"Failed to parse private key: " = "Failed to parse private key: "
+"Failed to parse public key: " = "Failed to parse public key: "
+"Failed to build handshake packet: " = "Failed to build handshake packet: "
+"Invalid base64 string: " = "Invalid base64 string: "
+"Noise key should be 32 bytes: " = "Noise key should be 32 bytes: "
