@@ -5,9 +5,9 @@ go 1.20
 require (
 	github.com/cheggaaa/pb/v3 v3.1.4
 	golang.zx2c4.com/wireguard v0.0.0-20231211153847-12269c276173
+	golang.org/x/text v0.14.0
+	golang.org/x/crypto v0.13.0
 )
-
-require golang.org/x/text v0.14.0
 
 require (
 	github.com/BurntSushi/toml v1.4.0
@@ -19,7 +19,6 @@ require (
 	github.com/mattn/go-runewidth v0.0.14 // indirect
 	github.com/nicksnyder/go-i18n/v2 v2.4.0
 	github.com/rivo/uniseg v0.2.0 // indirect
-	golang.org/x/crypto v0.13.0
 	golang.org/x/net v0.15.0 // indirect
 	golang.org/x/sys v0.12.0 // indirect
 	golang.org/x/time v0.0.0-20220210224613-90d013bbcef8 // indirect
