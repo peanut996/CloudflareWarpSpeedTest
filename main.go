@@ -58,7 +58,6 @@ func init() {
 }
 
 func main() {
-	task.InitRandSeed()
 	task.InitHandshakePacket()
 
 	fmt.Printf("CloudflareWarpSpeedTest\n\n")
