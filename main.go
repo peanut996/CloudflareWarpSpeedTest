@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	i18n "github.com/peanut996/CloudflareWarpSpeedTest/locale"
 	"github.com/peanut996/CloudflareWarpSpeedTest/task"
 	"github.com/peanut996/CloudflareWarpSpeedTest/utils"
 )
@@ -16,69 +17,34 @@ var (
 
 func init() {
 	var printVersion bool
-	var help = `
-CloudflareWarpSpeedTest ` + Version + `
-Test the latency and speed of all Cloudflare Warp IPs to obtain the lowest latency and port.
-
-Parameters:
-    -n 200
-        Latency test threads; the more threads, the faster the latency test, but do not set it too high on low-performance devices (such as routers); (default 200, maximum 1000)
-    -t 10
-        Number of latency tests; the number of times to test latency for a single IP; (default 10 times)
-    -c 5000
-        Number of addressed to be scanned; (default 5000)
-    -all
-        All mode; test results for all addresses; Disabled by default, [-all] turns on all mode.
-    -ipv6
-        IPv6 support. Only effect when not provide extra ip cidr.
-    -tl 300
-        Average latency upper limit; only output IPs with average latency lower than the specified limit, various upper and lower limit conditions can be used together; (default 300 ms)
-    -tll 40
-        Average latency lower limit; only output IPs with average latency higher than the specified limit; (default 0 ms)
-    -tlr 0.2
-        Packet loss rate upper limit; only output IPs with packet loss rate lower than or equal to the specified rate, range 0.00~1.00, 0 filters out any IPs with packet loss; (default 1.00)
-    -p 10
-        Number of results to display; directly display the specified number of results after testing, 0 means not displaying results and exiting directly; (default 10)
-    -f ip.txt
-        IP segment data file; add quotes if the path contains spaces;
-    -ip 1.1.1.1,2.2.2.2/24,2606:4700::/32
-        Specify IP segment data; directly specify the IP segment data to be tested through parameters, separated by commas; (default empty)
-    -o result.csv
-        Write result to file; add quotes if the path contains spaces; empty value means not writing to a file [-o ""]; (default result.csv)
-    -pri PrivateKey
-        Specify your WireGuard private key
-    -pub PublicKey
-        Specify your WireGuard public key, default is the Warp public key
-    -reserved Reserved
-        Add custom reserved field. format: [0, 0, 0]
-    -h
-        Print the help explanation
-    -v 
-        Print the version
-`
-
 	var minDelay, maxDelay int
 	var maxLossRate float64
-	flag.IntVar(&task.Routines, "n", 200, "Latency test threads")
-	flag.IntVar(&task.PingTimes, "t", 10, "Number of latency test times")
-	flag.IntVar(&task.MaxScanCount, "c", 5000, "Number of addr count")
+	localizer := i18n.InitI18n("main")
+	flag.IntVar(&task.Routines, "n", 200, i18n.QueryI18n(localizer, "n"))
+	flag.IntVar(&task.PingTimes, "t", 10, i18n.QueryI18n(localizer, "t"))
+	flag.IntVar(&task.MaxScanCount, "c", 5000, i18n.QueryI18n(localizer, "c"))
 
-	flag.IntVar(&maxDelay, "tl", 300, "Average latency upper limit")
-	flag.IntVar(&minDelay, "tll", 0, "Average latency lower limit")
-	flag.Float64Var(&maxLossRate, "tlr", 1, "Packet loss rate upper limit")
+	flag.IntVar(&maxDelay, "tl", 300, i18n.QueryI18n(localizer, "tl"))
+	flag.IntVar(&minDelay, "tll", 0, i18n.QueryI18n(localizer, "tll"))
+	flag.Float64Var(&maxLossRate, "tlr", 1, i18n.QueryI18n(localizer, "tlr"))
 
-	flag.BoolVar(&task.AllMode, "all", false, "All mode, test results for all IPs")
-	flag.BoolVar(&task.IPv6Mode, "ipv6", false, "IPv6 support. Only effect when not provide extra ip cidr.")
-	flag.IntVar(&utils.PrintNum, "p", 10, "Number of results to display")
-	flag.StringVar(&task.IPFile, "f", "", "IP segment data file")
-	flag.StringVar(&task.IPText, "ip", "", "Specify IP segment data")
-	flag.StringVar(&utils.Output, "o", "result.csv", "Output result file")
-	flag.StringVar(&task.PrivateKey, "pri", "", "Specify private key")
-	flag.StringVar(&task.PrivateKey, "pub", "", "Specify public key")
-	flag.StringVar(&task.ReservedString, "reserved", "", "Add custom reserved field")
-	flag.BoolVar(&printVersion, "v", false, "Print program version")
+	flag.BoolVar(&task.AllMode, "all", false, i18n.QueryI18n(localizer, "all"))
+	flag.BoolVar(&task.IPv6Mode, "ipv6", false, i18n.QueryI18n(localizer, "ipv6"))
+	flag.IntVar(&utils.PrintNum, "p", 10, i18n.QueryI18n(localizer, "p"))
+	flag.StringVar(&task.IPFile, "f", "", i18n.QueryI18n(localizer, "f"))
+	flag.StringVar(&task.IPText, "ip", "", i18n.QueryI18n(localizer, "ip"))
+	flag.StringVar(&utils.Output, "o", "result.csv", i18n.QueryI18n(localizer, "o"))
+	flag.StringVar(&task.PrivateKey, "pri", "", i18n.QueryI18n(localizer, "pri"))
+	flag.StringVar(&task.PrivateKey, "pub", "", i18n.QueryI18n(localizer, "pub"))
+	flag.StringVar(&task.ReservedString, "reserved", "", i18n.QueryI18n(localizer, "reserved"))
+	flag.BoolVar(&printVersion, "v", false, i18n.QueryI18n(localizer, "v"))
 
-	flag.Usage = func() { fmt.Print(help) }
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, `CloudflareWarpSpeedTest `+`
+`+
+			Version+i18n.QueryI18n(localizer, "h"))
+		flag.PrintDefaults()
+	}
 	flag.Parse()
 
 	utils.InputMaxDelay = time.Duration(maxDelay) * time.Millisecond

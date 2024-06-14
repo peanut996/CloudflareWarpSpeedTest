@@ -1,0 +1,8 @@
+"Available:" = "可用:"
+"Reserved field must be used with private key" = "reserved 必须与 private key 同时使用"
+"Failed to parse reserved, it must be 3 bytes slice: " = "解析 reserved 失败, 必须为 3 bytes 的片段: "
+"Failed to parse private key: " = "解析 private key 失败: "
+"Failed to parse public key: " = "解析 public key 失败: "
+"Failed to build handshake packet: " = "无法建立握手数据包: "
+"Invalid base64 string: " = "无效base64字符串: "
+"Noise key should be 32 bytes: " = "Noise key 应为 32 bytes: "

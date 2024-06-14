@@ -1,0 +1,21 @@
+n = "Latency test threads; the more threads, the faster the latency test, but do not set it too high on low-performance devices (such as routers); [maximum 1000]"
+t = "Number of latency tests; the number of times to test latency for a single IP; "
+c = "Number of addressed to be scanned; "
+all = "All mode; test results for all addresses; Disabled by default, [-all] turns on all mode."
+ipv6 = "IPv6 support. Only effect when not provide extra ip cidr."
+tl = "Average latency upper limit; only output IPs with average latency lower than the specified limit, various upper and lower limit conditions can be used together; [default 300 ms]"
+tll = "Average latency lower limit; only output IPs with average latency higher than the specified limit; (default 0 ms)"
+tlr = "Packet loss rate upper limit; only output IPs with packet loss rate lower than or equal to the specified rate, range 0.00~1.00, 0 filters out any IPs with packet loss; [default 1.00]"
+p = "Number of results to display; directly display the specified number of results after testing, 0 means not displaying results and exiting directly; "
+f = "IP segment data file; add quotes if the path contains spaces"
+ip = "Specify IP segment data; directly specify the IP segment data to be tested through parameters, separated by commas; (default empty)"
+o = 'Write result to file; add quotes if the path contains spaces; empty value means not writing to a file [-o ""]; '
+pri = "Specify your WireGuard private key"
+pub = "Specify your WireGuard public key, default is the Warp public key"
+reserved = "Add custom reserved field. format: [0, 0, 0]"
+h = '''Test the latency and speed of all Cloudflare Warp IPs to obtain the lowest latency and port.
+Use -h, --help to print the help explanation.
+
+Options:
+'''
+v = "Print the version"

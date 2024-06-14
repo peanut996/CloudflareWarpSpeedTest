@@ -9,7 +9,11 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	i18n "github.com/peanut996/CloudflareWarpSpeedTest/locale"
 )
+
+var localizerIp = i18n.InitI18n("task/ip")
 
 var (
 	IPText string
@@ -61,7 +65,7 @@ func (r *IPRanges) fixIP(ip string) string {
 func (r *IPRanges) parseCIDR(ip string) {
 	var err error
 	if r.firstIP, r.ipNet, err = net.ParseCIDR(r.fixIP(ip)); err != nil {
-		log.Fatalln("ParseCIDR err", err)
+		log.Fatalln(i18n.QueryI18n(localizerIp, "Parse CIDR err"), err)
 	}
 }
 
