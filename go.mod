@@ -4,9 +4,9 @@ go 1.20
 
 require (
 	github.com/cheggaaa/pb/v3 v3.1.4
-	golang.zx2c4.com/wireguard v0.0.0-20231211153847-12269c276173
-	golang.org/x/text v0.14.0
 	golang.org/x/crypto v0.13.0
+	golang.org/x/text v0.14.0
+	golang.zx2c4.com/wireguard v0.0.0-20231211153847-12269c276173
 )
 
 require (
