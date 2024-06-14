@@ -35,7 +35,7 @@ paru -S cloudflarewarpspeedtest-bin
 ```
 
 #### Go Install
-use go tool to install(go version <= 1.20)
+use go tool to install(go version recommend 1.22)
 
 ```bash
 go install github.com/peanut996/CloudflareWarpSpeedTest@latest

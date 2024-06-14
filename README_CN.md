@@ -35,7 +35,7 @@ paru -S cloudflarewarpspeedtest-bin
 ```
 
 #### Go Install
-使用go官方工具链安装(go版本<=1.20)
+使用go官方工具链安装(go版本推荐1.22)
 
 ```bash
 go install github.com/peanut996/CloudflareWarpSpeedTest@latest

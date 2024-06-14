@@ -3,12 +3,11 @@ package task
 import (
 	"bufio"
 	"log"
-	"math/rand"
+	"math/rand/v2"
 	"net"
 	"os"
 	"strconv"
 	"strings"
-	"time"
 
 	i18n "github.com/peanut996/CloudflareWarpSpeedTest/locale"
 )
@@ -20,10 +19,6 @@ var (
 	IPFile string
 )
 
-func InitRandSeed() {
-	rand.Seed(time.Now().UnixNano())
-}
-
 func isIPv4(ip string) bool {
 	return strings.Contains(ip, ".")
 }
@@ -32,7 +27,7 @@ func randIPEndWith(num byte) byte {
 	if num == 0 { // 对于 /32 这种单独的 IP
 		return byte(0)
 	}
-	return byte(rand.Intn(int(num)))
+	return byte(rand.IntN(int(num)))
 }
 
 type IPRanges struct {
