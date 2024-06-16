@@ -74,7 +74,7 @@ Parameters:
 	flag.StringVar(&task.IPText, "ip", "", "Specify IP segment data")
 	flag.StringVar(&utils.Output, "o", "result.csv", "Output result file")
 	flag.StringVar(&task.PrivateKey, "pri", "", "Specify private key")
-	flag.StringVar(&task.PrivateKey, "pub", "", "Specify public key")
+	flag.StringVar(&task.PublicKey, "pub", "", "Specify public key")
 	flag.StringVar(&task.ReservedString, "reserved", "", "Add custom reserved field")
 	flag.BoolVar(&printVersion, "v", false, "Print program version")
 
