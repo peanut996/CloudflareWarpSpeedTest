@@ -1,5 +1,0 @@
-"Create File Failed" = "Create file {{.Output}} failed：{{.err}}"
-"Total Result Zero Skip Output" = "\n[Info] The total number of IP addresses in the complete speed test results is 0, so skipping the output."
-"Write Result to File Done" = "\nComplete speed test results have been written to the {{..Output}} file.\n"
-"Loss" = "Loss"
-"Latency" = "Latency"

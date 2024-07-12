@@ -2,17 +2,14 @@ package task
 
 import (
 	"bufio"
+	"github.com/peanut996/CloudflareWarpSpeedTest/i18n"
 	"log"
 	"math/rand/v2"
 	"net"
 	"os"
 	"strconv"
 	"strings"
-
-	i18n "github.com/peanut996/CloudflareWarpSpeedTest/locale"
 )
-
-var localizerIp = i18n.InitI18n("task/ip")
 
 var (
 	IPText string
@@ -60,7 +57,7 @@ func (r *IPRanges) fixIP(ip string) string {
 func (r *IPRanges) parseCIDR(ip string) {
 	var err error
 	if r.firstIP, r.ipNet, err = net.ParseCIDR(r.fixIP(ip)); err != nil {
-		log.Fatalln(i18n.QueryI18n(localizerIp, "CIDR Invalid"), err)
+		log.Fatalln(i18n.QueryI18n("CIDR Invalid"), err)
 	}
 }
 

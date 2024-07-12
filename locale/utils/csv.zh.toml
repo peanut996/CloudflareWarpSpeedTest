@@ -1,5 +1,0 @@
-"CreateFileFailed" = "创建文件 {{.Output}} 失败：{{.err}}"
-"Total Result Zero Skip Output" = "\n[Info] 完成测速的IP地址总数为0, 跳过输出。"
-"Write Result to File Done" = "\n测速结果已写入 {{.Output}} 文件。\n"
-"Loss" = "丢包率"
-"Latency" = "延迟"

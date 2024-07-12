@@ -19,3 +19,26 @@ h = '''测试 Cloudflare Warp 所有 IP 的延迟和速度，获取最快 IP (IP
 选项:
 '''
 v = "打印程序版本号 {{.test}}"
+
+# ip
+"CIDR Invalid" = "解析CIDR失败"
+
+# warping
+"Available" = "可用:"
+"Reserved Empty" = "reserved 必须与 private key 同时使用"
+"Reserved Invalid" = "解析 reserved 失败, 必须为 3 bytes 的片段: "
+"PrivateKey Invalid" = "解析 private key 失败: "
+"PublicKey Invalid" = "解析 public key 失败: "
+"Build HandshakePacket Failed" = "无法建立握手数据包: "
+"Base64 Invalid" = "无效base64字符串: "
+"NoiseKey Invalid" = "Noise key 应为 32 bytes: "
+
+# csv
+"CreateFileFailed" = "创建文件 {{.Output}} 失败：{{.err}}"
+"Total Result Zero Skip Output" = "\n[Info] 完成测速的IP地址总数为0, 跳过输出。"
+"Write Result to File Done" = "\n测速结果已写入 {{.Output}} 文件。\n"
+"Loss" = "丢包率"
+"Latency" = "延迟"
+
+
+

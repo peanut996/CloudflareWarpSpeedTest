@@ -3,16 +3,13 @@ package utils
 import (
 	"encoding/csv"
 	"fmt"
+	"github.com/peanut996/CloudflareWarpSpeedTest/i18n"
 	"log"
 	"net"
 	"os"
 	"strconv"
 	"time"
-
-	i18n "github.com/peanut996/CloudflareWarpSpeedTest/locale"
 )
-
-var localizerCsv = i18n.InitI18n("utils/csv")
 
 const (
 	defaultOutput         = "warp.csv"
@@ -39,7 +36,7 @@ func noOutput() bool {
 
 type PingData struct {
 	IP       *net.UDPAddr
-	Sended   int
+	Sent     int
 	Received int
 	Delay    time.Duration
 }
@@ -51,8 +48,8 @@ type CloudflareIPData struct {
 
 func (cf *CloudflareIPData) getLossRate() float32 {
 	if cf.lossRate == 0 {
-		pingLost := cf.Sended - cf.Received
-		cf.lossRate = float32(pingLost) / float32(cf.Sended)
+		pingLost := cf.Sent - cf.Received
+		cf.lossRate = float32(pingLost) / float32(cf.Sent)
 	}
 	return cf.lossRate
 }
@@ -71,7 +68,7 @@ func ExportCsv(data []CloudflareIPData) {
 	}
 	fp, err := os.Create(Output)
 	if err != nil {
-		log.Fatalf(i18n.QueryTemplateI18n(localizerCsv, "Create File Failed", map[string]interface{}{"Output": Output, "err": err}))
+		log.Fatalf(i18n.QueryTemplateI18n("Create File Failed", map[string]interface{}{"Output": Output, "err": err}))
 		return
 	}
 	defer fp.Close()
@@ -142,7 +139,7 @@ func (s PingDelaySet) Print() {
 		return
 	}
 	if len(s) <= 0 {
-		fmt.Println(i18n.QueryI18n(localizerCsv, "Total Result Zero Skip Output"))
+		fmt.Println(i18n.QueryI18n("Total Result Zero Skip Output"))
 		return
 	}
 	dataString := convertToString(s)
@@ -157,11 +154,11 @@ func (s PingDelaySet) Print() {
 			dataFormat = "%-45s%-8s%-10s\n"
 		}
 	}
-	fmt.Printf(headFormat, "IP:Port", i18n.QueryI18n(localizerCsv, "Loss"), i18n.QueryI18n(localizerCsv, "Latency"))
+	fmt.Printf(headFormat, "IP:Port", i18n.QueryI18n("Loss"), i18n.QueryI18n("Latency"))
 	for i := 0; i < PrintNum; i++ {
 		fmt.Printf(dataFormat, dataString[i][0], dataString[i][1], dataString[i][2])
 	}
 	if !noOutput() {
-		fmt.Println(i18n.QueryTemplateI18n(localizerCsv, "Write Result to File Done", map[string]interface{}{"Output": Output}))
+		fmt.Println(i18n.QueryTemplateI18n("Write Result to File Done", map[string]interface{}{"Output": Output}))
 	}
 }
