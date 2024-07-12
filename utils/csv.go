@@ -71,7 +71,7 @@ func ExportCsv(data []CloudflareIPData) {
 	}
 	fp, err := os.Create(Output)
 	if err != nil {
-		log.Fatalf(i18n.QueryTemplateI18n(localizerCsv, "Create file {{.Output}} failed：{{.err}}", map[string]interface{}{"Output": Output, "err": err}))
+		log.Fatalf(i18n.QueryTemplateI18n(localizerCsv, "Create File Failed", map[string]interface{}{"Output": Output, "err": err}))
 		return
 	}
 	defer fp.Close()
@@ -142,7 +142,7 @@ func (s PingDelaySet) Print() {
 		return
 	}
 	if len(s) <= 0 {
-		fmt.Println(i18n.QueryI18n(localizerCsv, "\n[Info] The total number of IP addresses in the complete speed test results is 0, so skipping the output."))
+		fmt.Println(i18n.QueryI18n(localizerCsv, "Total Result Zero Skip Output"))
 		return
 	}
 	dataString := convertToString(s)
@@ -162,6 +162,6 @@ func (s PingDelaySet) Print() {
 		fmt.Printf(dataFormat, dataString[i][0], dataString[i][1], dataString[i][2])
 	}
 	if !noOutput() {
-		fmt.Println(i18n.QueryTemplateI18n(localizerCsv, "\nComplete speed test results have been written to the {{..Output}} file.\n", map[string]interface{}{"Output": Output}))
+		fmt.Println(i18n.QueryTemplateI18n(localizerCsv, "Write Result to File Done", map[string]interface{}{"Output": Output}))
 	}
 }

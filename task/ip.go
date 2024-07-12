@@ -60,7 +60,7 @@ func (r *IPRanges) fixIP(ip string) string {
 func (r *IPRanges) parseCIDR(ip string) {
 	var err error
 	if r.firstIP, r.ipNet, err = net.ParseCIDR(r.fixIP(ip)); err != nil {
-		log.Fatalln(i18n.QueryI18n(localizerIp, "Parse CIDR err"), err)
+		log.Fatalln(i18n.QueryI18n(localizerIp, "CIDR Invalid"), err)
 	}
 }
 
