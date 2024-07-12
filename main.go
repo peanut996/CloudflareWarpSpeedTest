@@ -35,7 +35,7 @@ func init() {
 	flag.StringVar(&task.IPText, "ip", "", i18n.QueryI18n(localizer, "ip"))
 	flag.StringVar(&utils.Output, "o", "result.csv", i18n.QueryI18n(localizer, "o"))
 	flag.StringVar(&task.PrivateKey, "pri", "", i18n.QueryI18n(localizer, "pri"))
-	flag.StringVar(&task.PrivateKey, "pub", "", i18n.QueryI18n(localizer, "pub"))
+	flag.StringVar(&task.PublicKey, "pub", "", i18n.QueryI18n(localizer, "pub"))
 	flag.StringVar(&task.ReservedString, "reserved", "", i18n.QueryI18n(localizer, "reserved"))
 	flag.BoolVar(&printVersion, "v", false, i18n.QueryI18n(localizer, "v"))
 
