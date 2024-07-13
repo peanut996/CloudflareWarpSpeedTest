@@ -1,41 +1,98 @@
-n = "Latency test threads; the more threads, the faster the latency test, but do not set it too high on low-performance devices (such as routers); [maximum 1000]"
-t = "Number of latency tests; the number of times to test latency for a single IP; "
-c = "Number of addressed to be scanned; "
-all = "All mode; test results for all addresses; Disabled by default, [-all] turns on all mode."
-ipv6 = "IPv6 support. Only effect when not provide extra ip cidr."
-tl = "Average latency upper limit; only output IPs with average latency lower than the specified limit, various upper and lower limit conditions can be used together; [default 300 ms]"
-tll = "Average latency lower limit; only output IPs with average latency higher than the specified limit; (default 0 ms)"
-tlr = "Packet loss rate upper limit; only output IPs with packet loss rate lower than or equal to the specified rate, range 0.00~1.00, 0 filters out any IPs with packet loss; [default 1.00]"
-p = "Number of results to display; directly display the specified number of results after testing, 0 means not displaying results and exiting directly; "
-f = "IP segment data file; add quotes if the path contains spaces"
-ip = "Specify IP segment data; directly specify the IP segment data to be tested through parameters, separated by commas; (default empty)"
-o = 'Write result to file; add quotes if the path contains spaces; empty value means not writing to a file [-o ""]; '
-pri = "Specify your WireGuard private key"
-pub = "Specify your WireGuard public key, default is the Warp public key"
-reserved = "Add custom reserved field. format: [0, 0, 0]"
-h = '''Test the latency and speed of all Cloudflare Warp IPs to obtain the lowest latency and port.
+[TestThreadCount]
+other = "Latency test threads; the more threads, the faster the latency test, but do not set it too high on low-performance devices (such as routers); [maximum 1000]"
+
+[LatencyTestTimes]
+other = "Number of latency tests; the number of times to test latency for a single IP; "
+
+[ScanAddressCount]
+other = "Number of addressed to be scanned; "
+
+[TestAllIpPortCombinations]
+other = "All mode; test results for all addresses; Disabled by default, [-all] turns on all mode."
+
+[ScanIpv6Only]
+other = "IPv6 support. Only effect when not provide extra IP CIDR."
+
+[LatencyUpperLimit]
+other = "Average latency upper limit; only output IPs with average latency lower than the specified limit, various upper and lower limit conditions can be used together; [default 300 ms]"
+
+[LatencyLowerLimit]
+other = "Average latency lower limit; only output IPs with average latency higher than the specified limit; (default 0 ms)"
+
+[PacketLossRateUpperLimit]
+other = "Packet loss rate upper limit; only output IPs with packet loss rate lower than or equal to the specified rate, range 0.00~1.00, 0 filters out any IPs with packet loss; [default 1.00]"
+
+[ResultDisplayCount]
+other = "Number of results to display; directly display the specified number of results after testing, 0 means not displaying results and exiting directly; "
+
+[IpDataFile]
+other = "IP segment data file; add quotes if the path contains spaces"
+
+[SpecifyIpData]
+other = "Specify IP segment data; directly specify the IP segment data to be tested through parameters, separated by commas; (default empty)"
+
+[OutputResultFile]
+other = 'Write result to file; add quotes if the path contains spaces; empty value means not writing to a file [-o ""]; '
+
+[CustomWireguardPrivateKey]
+other = "Specify your WireGuard private key"
+
+[CustomWireguardPublicKey]
+other = "Specify your WireGuard public key, default is the Warp public key"
+
+[CustomReservedField]
+other = "Add custom reserved field. format: [0, 0, 0]"
+
+[HelpMessage]
+other = '''Test the latency and speed of all Cloudflare Warp IPs to obtain the lowest latency and port.
 Use -h, --help to print the help explanation.
 
-Options:
-'''
-v = "Print the version"
+Options:'''
 
-# ip
-"CIDR Invalid" = "Parse CIDR err"
+[ProgramVersion]
+other = "Print the version"
 
-# warping
-"Available" = "Available:"
-"Reserved Empty" = "Reserved field must be used with private key"
-"Reserved Invalid" = "Failed to parse reserved, it must be 3 bytes slice: "
-"PrivateKey Invalid" = "Failed to parse private key: "
-"PublicKey Invalid" = "Failed to parse public key: "
-"Build HandshakePacket Failed" = "Failed to build handshake packet: "
-"Base64 Invalid" = "Invalid base64 string: "
-"NoiseKey Invalid" = "Noise key should be 32 bytes: "
+# IP相关信息
+[CidrInvalid]
+other = "Parse CIDR err"
 
-# csv
-"Create File Failed" = "Create file {{.Output}} failed：{{.err}}"
-"Total Result Zero Skip Output" = "\n[Info] The total number of IP addresses in the complete speed test results is 0, so skipping the output."
-"Write Result to File Done" = "\nComplete speed test results have been written to the {{..Output}} file.\n"
-"Loss" = "Loss"
-"Latency" = "Latency"
+# Warping相关信息
+[available]
+other = "Available:"
+
+[ReservedEmptyError]
+other = "Reserved field must be used with private key"
+
+[ReservedParseError]
+other = "Failed to parse reserved, it must be 3 bytes slice: "
+
+[PrivateKeyParseError]
+other = "Failed to parse private key: "
+
+[PublicKeyParseError]
+other = "Failed to parse public key: "
+
+[HandshakePacketBuildFailed]
+other = "Failed to build handshake packet: "
+
+[Base64Invalid]
+other = "Invalid base64 string: "
+
+[NoiseKeyInvalid]
+other = "Noise key should be 32 bytes: "
+
+# CSV相关信息
+[CreateFileFailed]
+other = "Create file {{.Output}} failed：{{.err}}"
+
+[TotalResultZeroSkipOutput]
+other = "\n[Info] The total number of IP addresses in the complete speed test results is 0, so skipping the output."
+
+[WriteResultToFileDone]
+other = "\nComplete speed test results have been written to the {{.Output}} file.\n"
+
+[PacketLossRate]
+other = "Loss"
+
+[latency]
+other = "Latency"

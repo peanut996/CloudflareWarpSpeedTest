@@ -7,7 +7,6 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"github.com/peanut996/CloudflareWarpSpeedTest/i18n"
 	"log"
 	"math/rand"
 	"net"
@@ -16,6 +15,8 @@ import (
 	"strconv"
 	"sync"
 	"time"
+
+	"github.com/peanut996/CloudflareWarpSpeedTest/i18n"
 
 	"golang.org/x/crypto/blake2s"
 	"golang.org/x/crypto/poly1305"
@@ -117,7 +118,7 @@ func NewWarping() *Warping {
 		ips:     ips,
 		csv:     make(utils.PingDelaySet, 0),
 		control: make(chan bool, Routines),
-		bar:     utils.NewBar(len(ips), i18n.QueryI18n("Available"), ""),
+		bar:     utils.NewBar(len(ips), i18n.QueryI18n(i18n.Available), ""),
 	}
 }
 
@@ -273,11 +274,11 @@ func shuffleAddrs(udpAddrs *[]*UDPAddr) {
 func InitHandshakePacket() {
 	if ReservedString != "" {
 		if PrivateKey == "" {
-			log.Fatalln(i18n.QueryI18n("Reserved Empty"))
+			log.Fatalln(i18n.QueryI18n(i18n.ReservedEmptyError))
 		}
 		r, err := utils.ParseReservedString(ReservedString)
 		if err != nil {
-			log.Fatalln(i18n.QueryI18n("Reserved Invalid") + err.Error())
+			log.Fatalln(i18n.QueryI18n(i18n.ReservedParseError) + err.Error())
 		}
 		reserved = r
 	}
@@ -292,12 +293,12 @@ func InitHandshakePacket() {
 
 	pri, err := getNoisePrivateKeyFromBase64(PrivateKey)
 	if err != nil {
-		log.Fatalln(i18n.QueryI18n("PrivateKey Invalid") + err.Error())
+		log.Fatalln(i18n.QueryI18n(i18n.PrivateKeyParseError) + err.Error())
 	}
 
 	pub, err := getNoisePublicKeyFromBase64(PublicKey)
 	if err != nil {
-		log.Fatalln(i18n.QueryI18n("PublicKey Invalid") + err.Error())
+		log.Fatalln(i18n.QueryI18n(i18n.PublicKeyParseError) + err.Error())
 	}
 
 	packet := buildHandshakePacket(pri, pub)
@@ -308,7 +309,7 @@ func InitHandshakePacket() {
 func buildHandshakePacket(pri device.NoisePrivateKey, pub device.NoisePublicKey) []byte {
 	d, _, err := netstack.CreateNetTUN([]netip.Addr{}, []netip.Addr{}, 1480)
 	if err != nil {
-		log.Fatalln(i18n.QueryI18n("Build HandshakePacket Failed") + err.Error())
+		log.Fatalln(i18n.QueryI18n(i18n.HandshakePacketBuildFailed) + err.Error())
 	}
 	dev := device.NewDevice(d, conn.NewDefaultBind(), device.NewLogger(0, ""))
 
@@ -316,11 +317,11 @@ func buildHandshakePacket(pri device.NoisePrivateKey, pub device.NoisePublicKey)
 
 	peer, err := dev.NewPeer(pub)
 	if err != nil {
-		log.Fatalln(i18n.QueryI18n("Build HandshakePacket Failed") + err.Error())
+		log.Fatalln(i18n.QueryI18n(i18n.HandshakePacketBuildFailed) + err.Error())
 	}
 	msg, err := dev.CreateMessageInitiation(peer)
 	if err != nil {
-		log.Fatalln(i18n.QueryI18n("Build HandshakePacket Failed") + err.Error())
+		log.Fatalln(i18n.QueryI18n(i18n.HandshakePacketBuildFailed) + err.Error())
 	}
 
 	var buf [device.MessageInitiationSize]byte
@@ -370,10 +371,10 @@ func getNoisePublicKeyFromBase64(b string) (device.NoisePublicKey, error) {
 func encodeBase64ToHex(key string) (string, error) {
 	decoded, err := base64.StdEncoding.DecodeString(key)
 	if err != nil {
-		return "", errors.New(i18n.QueryI18n("Base64 Invalid") + key)
+		return "", errors.New(i18n.QueryI18n(i18n.Base64Invalid) + key)
 	}
 	if len(decoded) != 32 {
-		return "", errors.New(i18n.QueryI18n("NoiseKey Invalid") + key)
+		return "", errors.New(i18n.QueryI18n(i18n.NoiseKeyInvalid) + key)
 	}
 	return hex.EncodeToString(decoded), nil
 }

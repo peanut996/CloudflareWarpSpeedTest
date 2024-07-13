@@ -3,12 +3,13 @@ package utils
 import (
 	"encoding/csv"
 	"fmt"
-	"github.com/peanut996/CloudflareWarpSpeedTest/i18n"
 	"log"
 	"net"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/peanut996/CloudflareWarpSpeedTest/i18n"
 )
 
 const (
@@ -68,7 +69,7 @@ func ExportCsv(data []CloudflareIPData) {
 	}
 	fp, err := os.Create(Output)
 	if err != nil {
-		log.Fatalf(i18n.QueryTemplateI18n("Create File Failed", map[string]interface{}{"Output": Output, "err": err}))
+		log.Fatalf(i18n.QueryTemplateI18n(i18n.CreateFileFailed, map[string]interface{}{"Output": Output, "err": err}))
 		return
 	}
 	defer fp.Close()
@@ -139,7 +140,7 @@ func (s PingDelaySet) Print() {
 		return
 	}
 	if len(s) <= 0 {
-		fmt.Println(i18n.QueryI18n("Total Result Zero Skip Output"))
+		fmt.Println(i18n.QueryI18n(i18n.TotalResultZeroSkipOutput))
 		return
 	}
 	dataString := convertToString(s)
@@ -154,11 +155,11 @@ func (s PingDelaySet) Print() {
 			dataFormat = "%-45s%-8s%-10s\n"
 		}
 	}
-	fmt.Printf(headFormat, "IP:Port", i18n.QueryI18n("Loss"), i18n.QueryI18n("Latency"))
+	fmt.Printf(headFormat, "IP:Port", i18n.QueryI18n(i18n.PacketLossRate), i18n.QueryI18n(i18n.Latency))
 	for i := 0; i < PrintNum; i++ {
 		fmt.Printf(dataFormat, dataString[i][0], dataString[i][1], dataString[i][2])
 	}
 	if !noOutput() {
-		fmt.Println(i18n.QueryTemplateI18n("Write Result to File Done", map[string]interface{}{"Output": Output}))
+		fmt.Println(i18n.QueryTemplateI18n(i18n.WriteResultToFileDone, map[string]interface{}{"Output": Output}))
 	}
 }

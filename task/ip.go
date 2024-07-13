@@ -2,13 +2,14 @@ package task
 
 import (
 	"bufio"
-	"github.com/peanut996/CloudflareWarpSpeedTest/i18n"
 	"log"
 	"math/rand/v2"
 	"net"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/peanut996/CloudflareWarpSpeedTest/i18n"
 )
 
 var (
@@ -57,7 +58,7 @@ func (r *IPRanges) fixIP(ip string) string {
 func (r *IPRanges) parseCIDR(ip string) {
 	var err error
 	if r.firstIP, r.ipNet, err = net.ParseCIDR(r.fixIP(ip)); err != nil {
-		log.Fatalln(i18n.QueryI18n("CIDR Invalid"), err)
+		log.Fatalln(i18n.QueryI18n(i18n.CidrInvalid), err)
 	}
 }
 

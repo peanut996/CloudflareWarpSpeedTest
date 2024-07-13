@@ -18,6 +18,40 @@ var localizer *i18n.Localizer
 
 var folderPrefix = "resources/"
 
+const (
+	TestThreadCount            = "TestThreadCount"
+	LatencyTestTimes           = "LatencyTestTimes"
+	ScanAddressCount           = "ScanAddressCount"
+	TestAllIpPortCombinations  = "TestAllIpPortCombinations"
+	ScanIpv6Only               = "ScanIpv6Only"
+	LatencyUpperLimit          = "LatencyUpperLimit"
+	LatencyLowerLimit          = "LatencyLowerLimit"
+	PacketLossRateUpperLimit   = "PacketLossRateUpperLimit"
+	ResultDisplayCount         = "ResultDisplayCount"
+	IpDataFile                 = "IpDataFile"
+	SpecifyIpData              = "SpecifyIpData"
+	OutputResultFile           = "OutputResultFile"
+	CustomWireguardPrivateKey  = "CustomWireguardPrivateKey"
+	CustomWireguardPublicKey   = "CustomWireguardPublicKey"
+	CustomReservedField        = "CustomReservedField"
+	HelpMessage                = "HelpMessage"
+	ProgramVersion             = "ProgramVersion"
+	CidrInvalid                = "CidrInvalid"
+	Available                  = "available"
+	ReservedEmptyError         = "ReservedEmptyError"
+	ReservedParseError         = "ReservedParseError"
+	PrivateKeyParseError       = "PrivateKeyParseError"
+	PublicKeyParseError        = "PublicKeyParseError"
+	HandshakePacketBuildFailed = "HandshakePacketBuildFailed"
+	Base64Invalid              = "Base64Invalid"
+	NoiseKeyInvalid            = "NoiseKeyInvalid"
+	CreateFileFailed           = "CreateFileFailed"
+	TotalResultZeroSkipOutput  = "TotalResultZeroSkipOutput"
+	WriteResultToFileDone      = "WriteResultToFileDone"
+	PacketLossRate             = "PacketLossRate"
+	Latency                    = "latency"
+)
+
 func init() {
 	initLocalizer()
 }
