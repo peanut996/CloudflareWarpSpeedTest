@@ -20,6 +20,17 @@ jobs:
         # build and publish in parallel: linux/386, linux/amd64, linux/arm64, windows/386, windows/amd64, darwin/amd64, darwin/arm64
         goos: [linux, windows, darwin]
         goarch: [amd64, arm64]
+        include:
+          - goos: linux
+            goarch: mips
+            gomips: softfloat
+          - goos: linux
+            goarch: mipsle
+            gomips: softfloat
+          - goos: linux
+            goarch: mips64
+          - goos: linux
+            goarch: mipsle64
     steps:
     - uses: actions/checkout@v3
 
