@@ -29,8 +29,8 @@ jobs:
             gomips: softfloat
           - goos: linux
             goarch: mips64
-#          - goos: linux
-#            goarch: mipsle64
+          - goos: linux
+            goarch: mips64le
     steps:
     - uses: actions/checkout@v3
 
