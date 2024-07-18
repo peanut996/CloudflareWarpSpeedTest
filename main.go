@@ -40,8 +40,7 @@ func init() {
 	flag.BoolVar(&printVersion, "v", false, i18n.QueryI18n(i18n.ProgramVersion))
 
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, `CloudflareWarpSpeedTest `+`
-`+Version+i18n.QueryI18n(i18n.HelpMessage))
+		fmt.Fprintf(os.Stderr, `CloudflareWarpSpeedTest `+"\n\n"+i18n.QueryI18n(i18n.HelpMessage))
 		flag.PrintDefaults()
 	}
 	flag.Parse()
