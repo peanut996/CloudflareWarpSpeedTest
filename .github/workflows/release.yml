@@ -34,7 +34,7 @@ jobs:
         run: |
           cd ${{ github.workspace }} 
           mkdir -p build-${{ matrix.goos }}-${{ matrix.goarch }}
-          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} go build -v -o build-${{ matrix.goos }}-${{ matrix.goarch }} ./...
+          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} go build -v -o build-${{ matrix.goos }}-${{ matrix.goarch }}/CloudflareWarpSpeedTest ./...
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
