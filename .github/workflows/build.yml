@@ -27,7 +27,7 @@ jobs:
     - name: Build
       run: |
         mkdir -p build-${{ matrix.goarch }}
-        GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} go build -v -o build-${{ matrix.goarch }}/CloudflareWarpSpeedTest ./...
+        GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} go build -v -o build-${{ matrix.goarch }}/ ./...
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
