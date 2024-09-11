@@ -32,7 +32,7 @@ jobs:
 
       - name: Build
         run: |
-          cd ${{ github.workspace }}  # 切换到项目根目录
+          cd ${{ github.workspace }} 
           mkdir -p build-${{ matrix.goos }}-${{ matrix.goarch }}
           GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} go build -v -o build-${{ matrix.goos }}-${{ matrix.goarch }} ./...
 
@@ -47,12 +47,12 @@ jobs:
         if: ${{ matrix.goos == 'linux' && matrix.goarch == 'amd64' }}
         with:
           files: |
-            build-linux-amd64/CloudflareWarpSpeedTest
-            build-linux-arm64/CloudflareWarpSpeedTest
-            build-linux-arm/CloudflareWarpSpeedTest
-            build-windows-amd64/CloudflareWarpSpeedTest
-            build-windows-arm64/CloudflareWarpSpeedTest
-            build-darwin-amd64/CloudflareWarpSpeedTest
-            build-darwin-arm64/CloudflareWarpSpeedTest
+            ${{ github.workspace }}/build-linux-amd64/CloudflareWarpSpeedTest
+            ${{ github.workspace }}/build-linux-arm64/CloudflareWarpSpeedTest
+            ${{ github.workspace }}/build-linux-arm/CloudflareWarpSpeedTest
+            ${{ github.workspace }}/build-windows-amd64/CloudflareWarpSpeedTest
+            ${{ github.workspace }}/build-windows-arm64/CloudflareWarpSpeedTest
+            ${{ github.workspace }}/build-darwin-amd64/CloudflareWarpSpeedTest
+            ${{ github.workspace }}/build-darwin-arm64/CloudflareWarpSpeedTest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
