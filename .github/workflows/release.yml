@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        goos: [linux, windows, darwin]
-        goarch: [amd64, arm64, arm]  # 添加 arm
+        goos: [linux, windows]  # 移除 darwin
+        goarch: [amd64, arm64, arm]
         include:
           - goos: linux
             goarch: mips
@@ -30,7 +30,7 @@ jobs:
             goarch: mips64
           - goos: linux
             goarch: mips64le
-          - goos: linux  # 添加 armv7 配置
+          - goos: linux
             goarch: arm
             goarm: 7
     steps:
