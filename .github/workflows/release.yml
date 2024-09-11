@@ -21,16 +21,6 @@ jobs:
           - goos: linux
             goarch: arm
             goarm: 7
-          - goos: linux
-            goarch: mips
-            gomips: softfloat
-          - goos: linux
-            goarch: mipsle
-            gomips: softfloat
-          - goos: linux
-            goarch: mips64
-          - goos: linux
-            goarch: mips64le
     steps:
     - uses: actions/checkout@v3
 
@@ -52,7 +42,7 @@ jobs:
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
         goarm: ${{ matrix.goarm }}
-        gomips: ${{ matrix.gomips }}
+        # gomips: ${{ matrix.gomips }}  # 不需要 MIPS 相关参数
         project_path: "."
         binary_name: "CloudflareWarpSpeedTest"
         goversion: "1.22"
