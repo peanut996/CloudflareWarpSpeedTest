@@ -1,36 +1,17 @@
-
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
-name: Go-Releaser
+name: Release for armv7l
 
 on:
   release:
     types: [created]
 
 permissions:
-    contents: write
-    packages: write
+  contents: write
+  packages: write
 
 jobs:
-  releases-matrix:
-    name: Release Go Binary
+  release:
+    name: Release Go Binary for armv7l
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        # build and publish in parallel: linux/386, linux/amd64, linux/arm64, windows/386, windows/amd64, darwin/amd64, darwin/arm64
-        goos: [linux, windows, darwin]
-        goarch: [amd64, arm64]
-        include:
-          - goos: linux
-            goarch: mips
-            gomips: softfloat
-          - goos: linux
-            goarch: mipsle
-            gomips: softfloat
-          - goos: linux
-            goarch: mips64
-          - goos: linux
-            goarch: mips64le
     steps:
     - uses: actions/checkout@v3
 
@@ -38,20 +19,14 @@ jobs:
       run: echo APP_VERSION=$(basename ${GITHUB_REF}) >> ${GITHUB_ENV}
 
     - name: Set ldflags as environment variable
-      run: |
-        if [ ${{ matrix.goos }} == 'linux' ]&&[ ${{ matrix.goarch }} == 'amd64' ]; then
-          LD_FLAGS="-X main.Version=${{ env.APP_VERSION }} -linkmode 'external' -extldflags '-static'"
-        else
-          LD_FLAGS="-X main.Version=${{ env.APP_VERSION }}"
-        fi
-        echo "LD_FLAGS=$LD_FLAGS" >> ${GITHUB_ENV}
+      run: echo "LD_FLAGS=-X main.Version=${{ env.APP_VERSION }}" >> ${GITHUB_ENV}
 
     - uses: wangyoucao577/go-release-action@v1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        goos: ${{ matrix.goos }}
-        goarch: ${{ matrix.goarch }}
-        gomips: ${{ matrix.gomips }}
+        goos: linux
+        goarch: arm
+        goarm: 7
         project_path: "."
         binary_name: "CloudflareWarpSpeedTest"
         goversion: "1.22"
