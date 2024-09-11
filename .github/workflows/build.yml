@@ -25,10 +25,12 @@ jobs:
         go-version: '1.22'
 
     - name: Build
-      run: GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} go build -v -o CloudflareWarpSpeedTest-${{ matrix.goarch }} ./...
+      run: |
+        mkdir -p build-${{ matrix.goarch }}
+        GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} go build -v -o build-${{ matrix.goarch }}/CloudflareWarpSpeedTest ./...
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
         name: CloudflareWarpSpeedTest-${{ matrix.goarch }}
-        path: CloudflareWarpSpeedTest-${{ matrix.goarch }}
+        path: build-${{ matrix.goarch }}
