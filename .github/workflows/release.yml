@@ -19,7 +19,7 @@ jobs:
           - goos: linux
             goarch: arm
             goarm: 7
-        exclude:  # 排除不支持的平台
+        exclude:
           - goos: darwin
             goarch: arm
     steps:
@@ -32,6 +32,7 @@ jobs:
 
       - name: Build
         run: |
+          cd ${{ github.workspace }}  # 切换到项目根目录
           mkdir -p build-${{ matrix.goos }}-${{ matrix.goarch }}
           GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} go build -v -o build-${{ matrix.goos }}-${{ matrix.goarch }} ./...
 
