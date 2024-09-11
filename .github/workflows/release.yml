@@ -34,7 +34,7 @@ jobs:
           - goos: darwin
             goarch: arm 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set APP_VERSION env
       run: echo APP_VERSION=$(basename ${GITHUB_REF}) >> ${GITHUB_ENV}
