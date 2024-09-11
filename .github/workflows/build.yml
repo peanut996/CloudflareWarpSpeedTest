@@ -1,6 +1,3 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
 name: Go Build
 
 on:
@@ -13,6 +10,12 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goarch: [amd64, arm64, arm]
+        include:
+          - goarch: arm
+            goarm: 7
     steps:
     - uses: actions/checkout@v3
 
@@ -22,4 +25,10 @@ jobs:
         go-version: '1.22'
 
     - name: Build
-      run: go build -v ./...
+      run: GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} go build -v -o CloudflareWarpSpeedTest-${{ matrix.goarch }} ./...
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: CloudflareWarpSpeedTest-${{ matrix.goarch }}
+        path: CloudflareWarpSpeedTest-${{ matrix.goarch }}
