@@ -19,8 +19,11 @@ jobs:
           - goos: linux
             goarch: arm
             goarm: 7
+        exclude:  # 排除不支持的平台
+          - goos: darwin
+            goarch: arm
     steps:
-      - uses: actions/checkout@v4  # 使用 v4 版本
+      - uses: actions/checkout@v4
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -30,17 +33,17 @@ jobs:
       - name: Build
         run: |
           mkdir -p build-${{ matrix.goos }}-${{ matrix.goarch }}
-          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} go build -v -o build-${{ matrix.goos }}-${{ matrix.goarch }}/CloudflareWarpSpeedTest ./...
+          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} go build -v -o build-${{ matrix.goos }}-${{ matrix.goarch }} ./...
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4  # 使用 v4 版本
+        uses: actions/upload-artifact@v4
         with:
           name: CloudflareWarpSpeedTest-${{ matrix.goos }}-${{ matrix.goarch }}
           path: build-${{ matrix.goos }}-${{ matrix.goarch }}
 
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: ${{ matrix.goos == 'linux' && matrix.goarch == 'amd64' }}  # 只在 linux/amd64 上发布 Release
+        if: ${{ matrix.goos == 'linux' && matrix.goarch == 'amd64' }}
         with:
           files: |
             build-linux-amd64/CloudflareWarpSpeedTest
