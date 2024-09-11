@@ -1,3 +1,6 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
 name: Go-Releaser
 
 on:
@@ -14,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        goos: [linux, windows]
+        goos: [linux, windows]  # 移除 darwin
         goarch: [amd64, arm64, arm]
         include:
           - goos: linux
@@ -33,17 +36,25 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.22'
+    - name: Set APP_VERSION env
+      run: echo APP_VERSION=$(basename ${GITHUB_REF}) >> ${GITHUB_ENV}
 
-    - name: Build
-      run: GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} GOMIPS=${{ matrix.gomips }} go build -ldflags "-X main.Version=${{ github.ref_name }}" -o CloudflareWarpSpeedTest-${{ matrix.goos }}-${{ matrix.goarch }}
+    - name: Set ldflags as environment variable
+      run: |
+        if [ ${{ matrix.goos }} == 'linux' ]&&[ ${{ matrix.goarch }} == 'amd64' ]; then
+          LD_FLAGS="-X main.Version=${{ env.APP_VERSION }} -linkmode 'external' -extldflags '-static'"
+        else
+          LD_FLAGS="-X main.Version=${{ env.APP_VERSION }}"
+        fi
+        echo "LD_FLAGS=$LD_FLAGS" >> ${GITHUB_ENV}
 
-    - name: Release
-      uses: softprops/action-gh-release@v1
+    - uses: wangyoucao577/go-release-action@v1
       with:
-        files: CloudflareWarpSpeedTest-${{ matrix.goos }}-${{ matrix.goarch }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        goos: ${{ matrix.goos }}
+        goarch: ${{ matrix.goarch }}
+        gomips: ${{ matrix.gomips }}
+        project_path: "."
+        binary_name: "CloudflareWarpSpeedTest"
+        goversion: "1.22"
+        ldflags: "${{ env.LD_FLAGS }}"
