@@ -36,7 +36,7 @@ jobs:
         fi
         echo "LD_FLAGS=$LD_FLAGS" >> ${GITHUB_ENV}
 
-    - uses: wangyoucao577/go-release-action@v1.51 
+    - uses: pdahd/go-release-action@v0.1-test-assets
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: ${{ matrix.goos }}
