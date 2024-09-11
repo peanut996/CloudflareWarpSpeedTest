@@ -1,3 +1,6 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
 name: Go-Releaser
 
 on:
@@ -5,8 +8,8 @@ on:
     types: [created]
 
 permissions:
-  contents: write
-  packages: write
+    contents: write
+    packages: write
 
 jobs:
   releases-matrix:
@@ -14,12 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # build and publish in parallel: linux/386, linux/amd64, linux/arm64, windows/386, windows/amd64, darwin/amd64, darwin/arm64
         goos: [linux, windows, darwin]
-        goarch: [amd64, arm64, 386, armv7]
+        goarch: [amd64, arm64, arm]  # 添加 arm
         include:
-          - goos: linux
-            goarch: armv7
           - goos: linux
             goarch: mips
             gomips: softfloat
@@ -30,7 +30,9 @@ jobs:
             goarch: mips64
           - goos: linux
             goarch: mips64le
-
+          - goos: linux  # 添加 armv7 配置
+            goarch: arm
+            goarm: 7
     steps:
     - uses: actions/checkout@v3
 
