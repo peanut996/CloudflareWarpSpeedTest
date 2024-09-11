@@ -33,6 +33,8 @@ jobs:
         exclude:
           - goos: darwin
             goarch: arm 
+          - goos: darwin
+            goarch: 386
     steps:
     - uses: actions/checkout@v4
 
