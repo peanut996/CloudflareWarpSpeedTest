@@ -13,15 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        goos: [linux, windows, darwin]
-        goarch: [amd64, arm64, arm]
-        include:
-          - goos: linux
-            goarch: arm
-            goarm: 7
-        exclude:
-          - goos: darwin
-            goarch: arm
+        goos: [linux]
+        goarch: [arm]
+        goarm: [7]
     steps:
       - uses: actions/checkout@v4
 
@@ -44,15 +38,9 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: ${{ matrix.goos == 'linux' && matrix.goarch == 'amd64' }}
+        if: ${{ matrix.goos == 'linux' && matrix.goarch == 'arm' && matrix.goarm == '7' }}
         with:
           files: |
-            ${{ github.workspace }}/build-linux-amd64/CloudflareWarpSpeedTest
-            ${{ github.workspace }}/build-linux-arm64/CloudflareWarpSpeedTest
             ${{ github.workspace }}/build-linux-arm/CloudflareWarpSpeedTest
-            ${{ github.workspace }}/build-windows-amd64/CloudflareWarpSpeedTest
-            ${{ github.workspace }}/build-windows-arm64/CloudflareWarpSpeedTest
-            ${{ github.workspace }}/build-darwin-amd64/CloudflareWarpSpeedTest
-            ${{ github.workspace }}/build-darwin-arm64/CloudflareWarpSpeedTest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
