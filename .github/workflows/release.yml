@@ -1,15 +1,12 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
-name: Go-Releaser
+name: Release for multiple platforms
 
 on:
   release:
     types: [created]
 
 permissions:
-    contents: write
-    packages: write
+  contents: write
+  packages: write
 
 jobs:
   releases-matrix:
@@ -17,10 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # build and publish in parallel: linux/386, linux/amd64, linux/arm64, windows/386, windows/amd64, darwin/amd64, darwin/arm64
         goos: [linux, windows, darwin]
-        goarch: [amd64, arm64]
+        goarch: [386, amd64, arm64]
         include:
+          - goos: linux
+            goarch: arm
+            goarm: 7
           - goos: linux
             goarch: mips
             gomips: softfloat
@@ -31,8 +30,13 @@ jobs:
             goarch: mips64
           - goos: linux
             goarch: mips64le
+        exclude:
+          - goos: darwin
+            goarch: arm 
+          - goos: darwin
+            goarch: 386
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set APP_VERSION env
       run: echo APP_VERSION=$(basename ${GITHUB_REF}) >> ${GITHUB_ENV}
@@ -46,11 +50,12 @@ jobs:
         fi
         echo "LD_FLAGS=$LD_FLAGS" >> ${GITHUB_ENV}
 
-    - uses: wangyoucao577/go-release-action@v1
+    - uses: pdahd/go-release-action@v0.1-test-assets
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
+        goarm: ${{ matrix.goarm }}
         gomips: ${{ matrix.gomips }}
         project_path: "."
         binary_name: "CloudflareWarpSpeedTest"
