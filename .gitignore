@@ -27,6 +27,12 @@ android/captures/
 android/app/libs/
 android/build/
 
+# Keep Gradle Wrapper
+!android/gradle/wrapper/gradle-wrapper.jar
+!android/gradle/wrapper/gradle-wrapper.properties
+!android/gradlew
+!android/gradlew.bat
+
 # macOS system files
 .DS_Store
 .DS_Store?
