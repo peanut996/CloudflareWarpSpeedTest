@@ -13,5 +13,5 @@ data class TestConfig(
     var customIPFile: String = "",
     var customIPText: String = "",
     var privateKey: String = "",
-    var publicKey: String = ""
+    var publicKey: String = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="
 )
