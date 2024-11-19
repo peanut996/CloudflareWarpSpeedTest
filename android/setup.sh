@@ -9,7 +9,7 @@ mkdir -p app/libs
 cp ../mobile/build/cloudflare_warp_speedtest.aar app/libs/
 
 # Create strings.xml
-cat > app/src/main/res/values/strings.xml << EOL
+cat > android/app/src/main/res/values/strings.xml << EOL
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cloudflare WARP Speed Test</string>
@@ -17,7 +17,7 @@ cat > app/src/main/res/values/strings.xml << EOL
 EOL
 
 # Create styles.xml
-cat > app/src/main/res/values/themes.xml << EOL
+cat > android/app/src/main/res/values/themes.xml << EOL
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.CloudflareWarpSpeedTest" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
