@@ -3,6 +3,7 @@ package mobile
 import (
 	"encoding/json"
 	"sync"
+	"time"
 
 	"github.com/peanut996/CloudflareWarpSpeedTest/task"
 	"github.com/peanut996/CloudflareWarpSpeedTest/utils"
@@ -57,8 +58,8 @@ func (s *SpeedTest) Configure(configJSON string) error {
 	task.PrivateKey = config.PrivateKey
 	task.PublicKey = config.PublicKey
 	utils.PrintNum = config.ResultDisplayCount
-	utils.InputMaxDelay = config.MaxDelay
-	utils.InputMinDelay = config.MinDelay
+	utils.InputMaxDelay = time.Duration(config.MaxDelay) * time.Millisecond
+	utils.InputMinDelay = time.Duration(config.MinDelay) * time.Millisecond
 	utils.InputMaxLossRate = float32(config.MaxLossRate)
 
 	return nil
