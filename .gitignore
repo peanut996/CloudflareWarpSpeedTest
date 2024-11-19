@@ -1,6 +1,6 @@
 dist
 Releases
-CloudflareWarpSpeedTest
+# CloudflareWarpSpeedTest
 *.exe
 *.csv
 .idea
