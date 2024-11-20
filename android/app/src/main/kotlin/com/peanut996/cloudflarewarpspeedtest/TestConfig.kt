@@ -2,7 +2,7 @@ package com.peanut996.cloudflarewarpspeedtest
 
 data class TestConfig(
     var threadCount: Int = 200,
-    var pingTimes: Int = 1,
+    var pingTimes: Int = 10,
     var maxScanCount: Int = 1000,
     var maxDelay: Long = 3,
     var minDelay: Long = 0,
