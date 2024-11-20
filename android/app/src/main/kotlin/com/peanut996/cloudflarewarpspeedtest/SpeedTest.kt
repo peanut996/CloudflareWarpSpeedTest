@@ -1,4 +1,4 @@
-package com.peanut996.warpspeedtest
+package com.peanut996.cloudflarewarpspeedtest
 
 import android.util.Log
 import com.google.gson.Gson
@@ -105,7 +105,10 @@ class SpeedTest {
             socket.soTimeout = 1000 // 1 second timeout
             
             val address = InetAddress.getByName(ipAddr)
-            val handshakePacket = createHandshakePacket()
+            val handshakePacket = WireGuardHandshake.createHandshakeInitiation(
+                privateKey = config.privateKey,
+                publicKey = config.publicKey
+            )
             
             var successfulPings = 0
             var totalDelay = 0L
@@ -148,12 +151,6 @@ class SpeedTest {
             Log.e(TAG, "Error testing endpoint $ipAddr: ${e.message}")
             null
         }
-    }
-
-    private fun createHandshakePacket(): ByteArray {
-        // TODO: Implement WireGuard handshake packet creation
-        // This is a placeholder - actual implementation needs to match the Go version's handshake protocol
-        return ByteArray(148) // Size of WireGuard handshake initiation message
     }
 
     private fun loadWarpIPRanges(): List<String> {
