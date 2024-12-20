@@ -82,7 +82,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            android/app/build/outputs/apk/release/app-release-signed.apk
+            {{ env.SIGNED_RELEASE_FILE }}
           draft: true
           prerelease: true
 
