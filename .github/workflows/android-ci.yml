@@ -35,6 +35,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          sdk-platform: '34'
+          build-tools: '34.0.0'
+
       - name: Build with Gradle
         working-directory: ./android
         run: ./gradlew build
