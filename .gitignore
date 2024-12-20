@@ -1,7 +1,43 @@
 dist
 Releases
-CloudflareWarpSpeedTest
+# CloudflareWarpSpeedTest
 *.exe
 *.csv
 .idea
 .vscode
+
+# Go build artifacts
+*.o
+*.a
+*.so
+
+# Android build artifacts
+*.aar
+*.apk
+*.aab
+*.dex
+*.class
+android/app/build/
+android/.gradle/
+android/local.properties
+android/.idea/
+android/app/release/
+android/app/debug/
+android/captures/
+android/app/libs/
+android/build/
+
+# Keep Gradle Wrapper
+!android/gradle/wrapper/gradle-wrapper.jar
+!android/gradle/wrapper/gradle-wrapper.properties
+!android/gradlew
+!android/gradlew.bat
+
+# macOS system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# IDE files
