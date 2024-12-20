@@ -136,6 +136,14 @@ class MainActivity : AppCompatActivity() {
                     val (current, total, percentage) = progressMatch.destructured
                     progressBar.progress = percentage.toInt()
                     progressTextView.text = "Testing endpoints: $current/$total ($percentage%)"
+                } else if (result.startsWith("Found working endpoint")) {
+                    // Append the new endpoint to existing text while keeping progress
+                    val currentText = resultTextView.text.toString()
+                    resultTextView.text = if (currentText.startsWith("Starting")) {
+                        result + "\n"
+                    } else {
+                        currentText + result + "\n"
+                    }
                 } else {
                     resultTextView.text = result
                 }

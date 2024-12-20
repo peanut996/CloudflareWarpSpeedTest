@@ -1,6 +1,7 @@
 package com.peanut996.cloudflarewarpspeedtest
 
 import android.util.Log
+import android.widget.TextView
 import com.peanut996.cloudflarewarpspeedtest.models.SpeedTestConfig
 import com.peanut996.cloudflarewarpspeedtest.models.SpeedTestResult
 import kotlinx.coroutines.CoroutineScope
@@ -16,6 +17,7 @@ import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.math.log
 
 class SpeedTest {
     private val TAG = "SpeedTest"
@@ -24,10 +26,10 @@ class SpeedTest {
     private val coroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val resultQueue = Channel<Any>(Channel.UNLIMITED)
     private var config = SpeedTestConfig()
+    private lateinit var ipPortTextView: TextView
 
     companion object {
         private val warpHandshakePacket: ByteArray by lazy {
-            // Copied from Go implementation, hex string decoded
             val hexString = "013cbdafb4135cac96a29484d7a0175ab152dd3e59be35049beadf758b8d48af14ca65f25a168934746fe8bc8867b1c17113d71c0fac5c141ef9f35783ffa5357c9871f4a006662b83ad71245a862495376a5fe3b4f2e1f06974d748416670e5f9b086297f652e6dfbf742fbfc63c3d8aeb175a3e9b7582fbc67c77577e4c0b32b05f92900000000000000000000000000000000"
             hexString.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
         }
@@ -78,7 +80,7 @@ class SpeedTest {
                 val numHosts = 1 shl hostBits
                 
                 // Only generate IPs within the subnet
-                for (i in 0 until minOf(numHosts, config.maxScanCount)) {
+                for (i in 0 until numHosts) {
                     val lastOctet = baseIPParts[3] + i
                     if (lastOctet > 255) break
                     
@@ -119,8 +121,9 @@ class SpeedTest {
                 var testedCount = 0
                 val endpoints = ipRanges.flatMap { ip -> 
                     ports.map { port -> Pair(ip, port) }
-                }
+                }.take(config.maxScanCount)
                 val totalCount = endpoints.size
+                Log.d(TAG, "total count: $totalCount")
 
                 withContext(Dispatchers.IO) {
                     val jobs = endpoints.map { (ip, port) ->
@@ -190,11 +193,14 @@ class SpeedTest {
                     val receiveData = ByteArray(92) // WireGuard handshake response size
                     val receivePacket = DatagramPacket(receiveData, receiveData.size)
                     socket.receive(receivePacket)
-                    
                     val delay = System.currentTimeMillis() - startTime
                     if (delay <= config.maxDelay) { // Only count responses within maxDelay
                         totalDelay += delay
                         successfulPings++
+                        // Send immediate success notification
+                        if (successfulPings == 1) { // Only send on first success to avoid spam
+                            resultQueue.send("Found working endpoint - IP: $ipAddr, Port: $port, Latency: ${delay}ms")
+                        }
                     }
                 } catch (e: Exception) {
                     lastError = e.message
@@ -207,6 +213,10 @@ class SpeedTest {
                 val lossRate = 1.0 - (successfulPings.toDouble() / config.pingTimes)
                 
                 if (avgDelay <= config.maxDelay && lossRate <= config.maxLossRate) {
+                    Log.d(TAG, "Ping successful for $ipAddr:$port")
+                    launch(Dispatchers.Main) {
+                        ipPortTextView.text = "成功连接到 IP: $ipAddr，端口: $port"
+                    }
                     return@withContext SpeedTestResult(
                         ip = ipAddr,
                         port = port,
@@ -225,7 +235,6 @@ class SpeedTest {
             socket?.close()
             onTested() // Ensure we count the attempt
         }
-        
         null
     }
 }
