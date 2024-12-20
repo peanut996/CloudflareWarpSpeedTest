@@ -2,11 +2,11 @@ name: CloudflareWarpSpeedTest Android CI/CD
 
 on:
   push:
-    branches: [ feature/android-gui ]
+    branches: [ "*", "*/*" ]
     tags:
       - 'v*'
   pull_request:
-    branches: [ feature/android-gui ]
+    branches: [ "*", "*/*" ]
   workflow_dispatch:
 
 jobs:
