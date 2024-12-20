@@ -83,7 +83,6 @@ jobs:
         with:
           files: |
             android/app/build/outputs/apk/release/app-release-signed.apk
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          draft: true
+          prerelease: true
+
