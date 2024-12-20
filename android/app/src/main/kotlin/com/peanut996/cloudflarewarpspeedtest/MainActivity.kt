@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var startButton: Button
     private lateinit var stopButton: Button
+    private lateinit var ipPortTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
         startButton = findViewById(R.id.startButton)
         stopButton = findViewById(R.id.stopButton)
+        ipPortTextView = findViewById(R.id.ipPortText)
         
         // Initially disable stop button and hide progress
         stopButton.isEnabled = false

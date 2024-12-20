@@ -26,7 +26,6 @@ class SpeedTest {
     private val coroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val resultQueue = Channel<Any>(Channel.UNLIMITED)
     private var config = SpeedTestConfig()
-    private lateinit var ipPortTextView: TextView
 
     companion object {
         private val warpHandshakePacket: ByteArray by lazy {
@@ -214,9 +213,6 @@ class SpeedTest {
                 
                 if (avgDelay <= config.maxDelay && lossRate <= config.maxLossRate) {
                     Log.d(TAG, "Ping successful for $ipAddr:$port")
-                    launch(Dispatchers.Main) {
-                        ipPortTextView.text = "成功连接到 IP: $ipAddr，端口: $port"
-                    }
                     return@withContext SpeedTestResult(
                         ip = ipAddr,
                         port = port,
