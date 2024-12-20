@@ -91,13 +91,16 @@ class MainActivity : AppCompatActivity() {
                     delay(500) // Update every 500ms
                 }
 
-                // Get final results
-                val finalResult = speedTest.getResults()
-                if (finalResult != null) {
-                    withContext(Dispatchers.Main) {
-                        updateProgress(finalResult)
+                // Process any remaining results in the channel
+                var finalResult: Any?
+                do {
+                    finalResult = speedTest.getResults()
+                    if (finalResult != null) {
+                        withContext(Dispatchers.Main) {
+                            updateProgress(finalResult)
+                        }
                     }
-                }
+                } while (finalResult != null)
             } catch (e: Exception) {
                 Log.e(TAG, "Error during speed test: ${e.message}")
                 withContext(Dispatchers.Main) {
