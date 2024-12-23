@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.peanut996.cloudflarewarpspeedtest.models.SpeedTestConfig
+import com.peanut996.cloudflarewarpspeedtest.models.SpeedTestConfigBuilder
 import com.peanut996.cloudflarewarpspeedtest.models.SpeedTestResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var startButton: Button
     private lateinit var stopButton: Button
     private lateinit var ipPortTextView: TextView
+    private lateinit var settingsButton: View
+    private var currentConfig = SpeedTestConfigBuilder.createDefault()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         startButton = findViewById(R.id.startButton)
         stopButton = findViewById(R.id.stopButton)
         ipPortTextView = findViewById(R.id.ipPortText)
+        settingsButton = findViewById(R.id.settingsButton)
         
         // Initially disable stop button and hide progress
         stopButton.isEnabled = false
@@ -57,12 +61,24 @@ class MainActivity : AppCompatActivity() {
         stopButton.setOnClickListener {
             stopSpeedTest()
         }
+
+        settingsButton.setOnClickListener {
+            showConfigDialog()
+        }
+    }
+
+    private fun showConfigDialog() {
+        SpeedTestConfigDialog.newInstance(currentConfig).apply {
+            setOnConfigUpdatedListener { config ->
+                currentConfig = config
+                configureSpeedTest()
+            }
+        }.show(supportFragmentManager, "config_dialog")
     }
 
     private fun configureSpeedTest() {
-        val config = SpeedTestConfig()
         try {
-            speedTest.configure(config)
+            speedTest.configure(currentConfig)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to configure speed test: ${e.message}")
             resultTextView.text = "Configuration error: ${e.message}"

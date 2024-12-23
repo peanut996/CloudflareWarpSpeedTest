@@ -23,6 +23,17 @@
         app:layout_constraintStart_toEndOf="@id/startButton"
         app:layout_constraintTop_toTopOf="@id/startButton" />
 
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:src="@android:drawable/ic_menu_preferences"
+        android:contentDescription="Settings"
+        app:layout_constraintStart_toEndOf="@id/stopButton"
+        app:layout_constraintTop_toTopOf="@id/startButton"
+        app:layout_constraintBottom_toBottomOf="@id/startButton" />
+
     <TextView
         android:id="@+id/progressText"
         android:layout_width="wrap_content"
