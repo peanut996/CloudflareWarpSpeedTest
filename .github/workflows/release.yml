@@ -1,4 +1,4 @@
-name: Release for multiple platforms
+name: Go Release
 
 on:
   push:

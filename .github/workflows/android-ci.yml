@@ -1,4 +1,4 @@
-name: CloudflareWarpSpeedTest Android CI/CD
+name: Android
 
 on:
   push:
