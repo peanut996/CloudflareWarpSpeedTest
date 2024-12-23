@@ -1,8 +1,6 @@
 name: Release for multiple platforms
 
 on:
-  release:
-    types: [created]
   push:
     tags:
       - 'v*'
