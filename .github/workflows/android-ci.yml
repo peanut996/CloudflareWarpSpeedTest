@@ -1,4 +1,4 @@
-name: CloudflareWarpSpeedTest Android CI/CD
+name: Android
 
 on:
   push:
@@ -76,12 +76,12 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: "34.0.0"
 
-      - name: Rename APK with Git SHA
+      - name: Rename APK with Version
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
-          GIT_SHA=$(git rev-parse --short HEAD)
-          mv ${{ env.SIGNED_RELEASE_FILE }} android/app/build/outputs/apk/release/WARPTest-${GIT_SHA}.apk
-          echo "RELEASE_APK=android/app/build/outputs/apk/release/WARPTest-${GIT_SHA}.apk" >> $GITHUB_ENV
+          VERSION=${GITHUB_REF#refs/tags/}
+          mv ${{ env.SIGNED_RELEASE_FILE }} android/app/build/outputs/apk/release/CloudflareWarpSpeedTest-${VERSION}.apk
+          echo "RELEASE_APK=android/app/build/outputs/apk/release/CloudflareWarpSpeedTest-${VERSION}.apk" >> $GITHUB_ENV
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')
