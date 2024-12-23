@@ -132,7 +132,6 @@ class SpeedTest {
                                 // Calculate percentage and update progress
                                 val percentage = (testedCount.toFloat() / totalCount.toFloat() * 100).toInt()
                                 launch { 
-                                    resultQueue.send("Progress: $testedCount/$totalCount ($percentage%)")
                                     // Send intermediate result if all tests are complete
                                     if (testedCount == totalCount) {
                                         if (results.isEmpty()) {
