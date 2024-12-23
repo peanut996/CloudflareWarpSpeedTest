@@ -85,8 +85,6 @@ class SpeedTest {
                     
                     val ip = "${baseIPParts[0]}.${baseIPParts[1]}.${baseIPParts[2]}.$lastOctet"
                     ipRanges.add(ip)
-                    
-                    if (ipRanges.size >= config.maxScanCount) break
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error processing CIDR $cidr: ${e.message}")
@@ -103,7 +101,7 @@ class SpeedTest {
         } else emptyList()
 
         // TODO: Add IPv6 support
-        return ipRanges.take(config.maxScanCount)
+        return ipRanges
     }
 
     fun start() {
@@ -118,9 +116,11 @@ class SpeedTest {
                 val ipRanges = loadWarpIPRanges()
                 val results = mutableListOf<SpeedTestResult>()
                 var testedCount = 0
-                val endpoints = ipRanges.flatMap { ip -> 
+                val allEndpoints = ipRanges.flatMap { ip -> 
                     ports.map { port -> Pair(ip, port) }
-                }.take(config.maxScanCount)
+                }
+                // Randomly select maxScanCount endpoints
+                val endpoints = allEndpoints.shuffled().take(config.maxScanCount)
                 val totalCount = endpoints.size
                 Log.d(TAG, "total count: $totalCount")
 
@@ -132,7 +132,6 @@ class SpeedTest {
                                 // Calculate percentage and update progress
                                 val percentage = (testedCount.toFloat() / totalCount.toFloat() * 100).toInt()
                                 launch { 
-                                    resultQueue.send("Progress: $testedCount/$totalCount ($percentage%)")
                                     // Send intermediate result if all tests are complete
                                     if (testedCount == totalCount) {
                                         if (results.isEmpty()) {

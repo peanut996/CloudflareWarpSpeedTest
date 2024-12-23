@@ -4,9 +4,30 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+    
+    <!-- Background Circle -->
     <path
-        android:fillColor="#FF000000"
-        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"
-        android:strokeWidth="1"
-        android:strokeColor="#00000000"/>
+        android:fillColor="#F6821F"
+        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"/>
+    
+    <!-- Speed Arrow -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,34 L64,54 L44,54 Z"/>
+    
+    <!-- Speed Lines -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M54,54 L54,74"/>
+    
+    <!-- Speed Arc -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000"
+        android:pathData="M34,54 A20,20 0 0,1 74,54"/>
 </vector>

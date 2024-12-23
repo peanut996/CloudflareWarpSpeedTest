@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.peanut996.cloudflarewarpspeedtest.models.SpeedTestConfig
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.peanut996.cloudflarewarpspeedtest.models.SpeedTestConfigBuilder
 import com.peanut996.cloudflarewarpspeedtest.models.SpeedTestResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -18,12 +19,15 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     private lateinit var speedTest: SpeedTest
-    private lateinit var resultTextView: TextView
     private lateinit var progressTextView: TextView
-    private lateinit var progressBar: ProgressBar
     private lateinit var startButton: Button
     private lateinit var stopButton: Button
     private lateinit var ipPortTextView: TextView
+    private lateinit var settingsButton: View
+    private lateinit var resultRecyclerView: RecyclerView
+    private lateinit var resultHeader: View
+    private lateinit var resultAdapter: SpeedTestResultAdapter
+    private var currentConfig = SpeedTestConfigBuilder.createDefault()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,22 +35,34 @@ class MainActivity : AppCompatActivity() {
 
         speedTest = SpeedTest()
         setupViews()
+        setupRecyclerView()
         setupClickListeners()
         configureSpeedTest()
     }
 
     private fun setupViews() {
-        resultTextView = findViewById(R.id.resultText)
         progressTextView = findViewById(R.id.progressText)
-        progressBar = findViewById(R.id.progressBar)
         startButton = findViewById(R.id.startButton)
         stopButton = findViewById(R.id.stopButton)
         ipPortTextView = findViewById(R.id.ipPortText)
+        settingsButton = findViewById(R.id.settingsButton)
+        resultRecyclerView = findViewById(R.id.resultRecyclerView)
+        resultHeader = findViewById(R.id.resultHeader)
         
         // Initially disable stop button and hide progress
         stopButton.isEnabled = false
-        progressBar.visibility = View.GONE
         progressTextView.visibility = View.GONE
+        resultHeader.visibility = View.GONE
+        resultRecyclerView.visibility = View.GONE
+    }
+
+    private fun setupRecyclerView() {
+        resultAdapter = SpeedTestResultAdapter()
+        resultRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = resultAdapter
+            setHasFixedSize(true)
+        }
     }
 
     private fun setupClickListeners() {
@@ -57,15 +73,27 @@ class MainActivity : AppCompatActivity() {
         stopButton.setOnClickListener {
             stopSpeedTest()
         }
+
+        settingsButton.setOnClickListener {
+            showConfigDialog()
+        }
+    }
+
+    private fun showConfigDialog() {
+        SpeedTestConfigDialog.newInstance(currentConfig).apply {
+            setOnConfigUpdatedListener { config ->
+                currentConfig = config
+                configureSpeedTest()
+            }
+        }.show(supportFragmentManager, "config_dialog")
     }
 
     private fun configureSpeedTest() {
-        val config = SpeedTestConfig()
         try {
-            speedTest.configure(config)
+            speedTest.configure(currentConfig)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to configure speed test: ${e.message}")
-            resultTextView.text = "Configuration error: ${e.message}"
+            progressTextView.text = "Configuration error: ${e.message}"
         }
     }
 
@@ -74,9 +102,11 @@ class MainActivity : AppCompatActivity() {
             try {
                 startButton.isEnabled = false
                 stopButton.isEnabled = true
-                progressBar.visibility = View.VISIBLE
                 progressTextView.visibility = View.VISIBLE
-                resultTextView.text = "Starting speed test..."
+                resultAdapter.clearResults()
+                resultHeader.visibility = View.GONE
+                resultRecyclerView.visibility = View.GONE
+                ipPortTextView.text = ""
 
                 speedTest.start()
 
@@ -101,12 +131,11 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 } while (finalResult != null)
+
             } catch (e: Exception) {
                 Log.e(TAG, "Error during speed test: ${e.message}")
                 withContext(Dispatchers.Main) {
-                    resultTextView.text = "Error: ${e.message}"
-                    progressBar.visibility = View.GONE
-                    progressTextView.visibility = View.GONE
+                    progressTextView.text = "Error: ${e.message}"
                 }
             } finally {
                 withContext(Dispatchers.Main) {
@@ -119,54 +148,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun stopSpeedTest() {
         speedTest.stop()
-        startButton.isEnabled = true
         stopButton.isEnabled = false
-        progressBar.visibility = View.GONE
         progressTextView.visibility = View.GONE
-        resultTextView.text = "Speed test stopped"
+        resultHeader.visibility = View.GONE
+        resultRecyclerView.visibility = View.GONE
+        progressTextView.text = "Speed test stopped"
     }
 
     private fun updateProgress(result: Any) {
         when (result) {
+            is String -> {
+                progressTextView.text = result
+            }
             is List<*> -> {
                 @Suppress("UNCHECKED_CAST")
-                val results = result as List<SpeedTestResult>
-                resultTextView.text = formatResults(results)
-                progressBar.visibility = View.GONE
-                progressTextView.visibility = View.GONE
-            }
-            is String -> {
-                val progressMatch = Regex("Progress: (\\d+)/(\\d+) \\((\\d+)%\\)").find(result)
-                if (progressMatch != null) {
-                    val (current, total, percentage) = progressMatch.destructured
-                    progressBar.progress = percentage.toInt()
-                    progressTextView.text = "Testing endpoints: $current/$total ($percentage%)"
-                } else if (result.startsWith("Found working endpoint")) {
-                    // Append the new endpoint to existing text while keeping progress
-                    val currentText = resultTextView.text.toString()
-                    resultTextView.text = if (currentText.startsWith("Starting")) {
-                        result + "\n"
-                    } else {
-                        currentText + result + "\n"
-                    }
-                } else {
-                    resultTextView.text = result
+                val speedTestResults = result as List<SpeedTestResult>
+                resultAdapter.updateResults(speedTestResults)
+                if (speedTestResults.isNotEmpty()) {
+                    progressTextView.visibility = View.GONE
+                    resultHeader.visibility = View.VISIBLE
+                    resultRecyclerView.visibility = View.VISIBLE
                 }
-            }
-        }
-    }
-
-    private fun formatResults(results: List<SpeedTestResult>): String {
-        if (results.isEmpty()) {
-            return "No results yet"
-        }
-
-        return buildString {
-            appendLine("Test Results:")
-            results.forEachIndexed { index, result ->
-                appendLine("${index + 1}. IP: ${result.ip}:${result.port}")
-                appendLine("   Delay: ${result.delay}ms")
-                appendLine("   Loss Rate: ${String.format("%.2f", result.lossRate * 100)}%")
             }
         }
     }
