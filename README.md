@@ -77,11 +77,13 @@ Please note that adjusting test parameters can affect test speed and results. Ch
 
 This software is released under the [GPL v3 license](LICENSE).
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=peanut996/CloudflareWarpSpeedTest&type=Date)](https://star-history.com/#peanut996/CloudflareWarpSpeedTest&Date)
+
+
 ## Sponsors
 
 <a href="https://jb.gg/OpenSourceSupport" target="_blank"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" height='128' style='border:0px;height:128px;' alt="JetBrains Logo (Main) logo."></a>
 
 [<img src="https://api.gitsponsors.com/api/badge/img?id=678655309" height="20">](https://api.gitsponsors.com/api/badge/link?p=2SeJSlCMAbiZovmC7aZir+Nc2xhJA2v0sMIffn+tDszOoGUadNayD4B6695a0uFID86bmIzyh6QbC87NPszQtS4GNYQd/VhGU41MisFC0/sXac31NdmXuEELTevJBxxL5EGjw0dJZNOUDLVGCu2l5Q==)
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=peanut996/CloudflareWarpSpeedTest&type=Date)](https://star-history.com/#peanut996/CloudflareWarpSpeedTest&Date)
